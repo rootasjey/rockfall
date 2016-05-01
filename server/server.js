@@ -17,13 +17,13 @@ var app = express();
 // ----------------
 app.set('port', process.env.PORT || 3003);
 app.set('view engine', 'pug');
-app.set('views', __dirname + '/views');	// folder templates
+app.set('views', __dirname + '/../client');	// folder templates
 app.use(morgan('dev'));					// logging output
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(methodOverride());
 // static folder containing css, img & others contents
-app.use(express.static(__dirname + '/client'));
+app.use(express.static(__dirname + '/../client'));
 
 // Variable spécifiant le chemin relatif du serveur
 var addressServer = "localhost";
@@ -40,17 +40,18 @@ app.get('/', function(req, res) {
 		addressServer = req.get('host');
 	}
 
-	// res.render('index', {title: 'Home'});
-    res.status(200).send("success!");
-})
+       res.render('index');
 
+    //res.status(200).send("success!");
+})
+/*
 .use('/user', userRoute)
 
 .use(function(req, res, next) {
 	var err = new Error('Not Found');
     err.status = 404;
     next(err);
-});
+})*/;
 
 // Development error handler
 // Will print stacktrace
