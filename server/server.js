@@ -2,12 +2,12 @@
 // SERVER.JS (ROCKFALL)
 // --------------------
 var express 		= require('express'),	// web dev framework
-	morgan 			= require('morgan'),	// loggin middleware
+    morgan 			= require('morgan'),	// loggin middleware
     http 			= require('http'),
     path 			= require('path'),
-	fs 				= require('fs') 		// file stream
-	bodyParser 		= require('body-parser')
-	methodOverride 	= require('method-override');
+    fs 				= require('fs') 		// file stream
+    bodyParser 		= require('body-parser')
+    methodOverride 	= require('method-override');
     // Matchmaker = require('matchmaker');
 
 // ----------------
@@ -34,11 +34,11 @@ var addressServer = "localhost";
 var userRoute = require('./routes/user');
 
 app.get('/', function(req, res) {
-	if (addressServer.indexOf("::") != -1) {
-		// Variable redéfinissant le chemin relatif du serveur sous io.js
-		// var fullUrl = req.protocol + "://" + req.get('host') + req.originalUrl;
-		addressServer = req.get('host');
-	}
+    if (addressServer.indexOf("::") != -1) {
+        // Variable redéfinissant le chemin relatif du serveur sous io.js
+        // var fullUrl = req.protocol + "://" + req.get('host') + req.originalUrl;
+        addressServer = req.get('host');
+    }
 
        res.render('index');
 
@@ -48,7 +48,7 @@ app.get('/', function(req, res) {
 .use('/user', userRoute)
 
 .use(function(req, res, next) {
-	var err = new Error('Not Found');
+    var err = new Error('Not Found');
     err.status = 404;
     next(err);
 })*/;
