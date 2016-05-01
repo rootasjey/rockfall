@@ -15,12 +15,6 @@ var express 		= require('express'),	// web dev framework
 // ----------------
 var app = express();
 // ----------------
-// function compile(str, path) {
-// 	return stylus(str)
-// 		.set('filename', path)
-// 		.use(nib());
-// }
-
 app.set('port', process.env.PORT || 3003);
 app.set('view engine', 'pug');
 app.set('views', __dirname + '/views');	// folder templates
@@ -28,15 +22,16 @@ app.use(morgan('dev'));					// logging output
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(methodOverride());
-// app.use(stylus.middleware({
-// 	src: __dirname + '/public',
-// 	compile: compile
-// }));
 // static folder containing css, img & others contents
 app.use(express.static(__dirname + '/client'));
 
 // Variable spécifiant le chemin relatif du serveur
 var addressServer = "localhost";
+
+// --------
+// ROUTING
+// --------
+var userRoute = require('./routes/user');
 
 app.get('/', function(req, res) {
 	if (addressServer.indexOf("::") != -1) {
@@ -48,6 +43,9 @@ app.get('/', function(req, res) {
 	// res.render('index', {title: 'Home'});
     res.status(200).send("success!");
 })
+
+.use('/user', userRoute)
+
 .use(function(req, res, next) {
 	var err = new Error('Not Found');
     err.status = 404;
@@ -67,6 +65,8 @@ if (app.get('env') === 'development') {
     });
 }
 
+// Production error handler
+// No stacktrace leaked to user
 app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.json('error in production', {
@@ -77,11 +77,11 @@ app.use(function (err, req, res, next) {
 
 // Listen port => server start
 var server = http.createServer(app).listen(app.get('port'), function() {
-    if(server.address().address != "0.0.0.0") {
+    if(server.address().address != '0.0.0.0') {
         addressServer = server.address().address + ":" + app.get('port');
     } else{
         addressServer += ":" + app.get('port');
     }
 
-    console.log("En attente de connexion sur le port :" + app.get('port'));
+    console.log('Rockfall is live on port :' + app.get('port'));
 });
