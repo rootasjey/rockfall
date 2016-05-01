@@ -19,10 +19,22 @@ module.exports = {
   },
   module: {
       loaders: [
-          { test: /\.js$/, loaders: ['react-hot', 'babel-loader'], exclude: /node_modules/ },
-          { test: /\.jsx?$/, loaders: ['react-hot', 'babel-loader'], exclude: /node_modules/ },
-          { test: /\.css$/, loader: "style!css" },
-          { test: /\.svg$/, loader: "raw" }
-      ]
+        {
+          test: /\.jsx?$/,
+          exclude: /(node_modules|bower_components)/,
+          loader: 'babel', // 'babel-loader' is also a legal name to reference
+          query: {
+            presets: ['es2015', 'react']
+          }
+      },
+      {
+        test: /\.js$/,
+        exclude: /(node_modules|bower_components)/,
+        loader: 'babel', // 'babel-loader' is also a legal name to reference
+        query: {
+          presets: ['es2015', 'react']
+        }
+      }
+  ]
   }
 };
