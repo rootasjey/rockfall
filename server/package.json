@@ -1,0 +1,29 @@
+{
+  "name": "rockfall",
+  "version": "0.1.0",
+  "description": "A connect four game",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rootasjey/rockfall.git"
+  },
+  "author": [
+    "Emmanuel ELISA",
+    "Jeremie CORPINOT"
+  ],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rootasjey/rockfall/issues"
+  },
+  "homepage": "https://github.com/rootasjey/rockfall#readme",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4",
+    "method-override": "^2.3.5",
+    "morgan": "^1.7.0",
+    "pug": "^2.0.0-alpha6"
+  }
+}
