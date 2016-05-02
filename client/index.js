@@ -14,11 +14,8 @@ ReactDOM.render(
     rootElement
 );
 
-<<<<<<< HEAD
-=======
 // This one does NOT work!
 ReactDOM.render(
     <hello/>,
     document.querySelector('.toto')
 );
->>>>>>> fd6b593dad280c2d2dbdb918f55fa76b20ff96ee

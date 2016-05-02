@@ -19,21 +19,6 @@ module.exports = {
   },
   module: {
       loaders: [
-<<<<<<< HEAD
-          { test: /\.js$/, loaders: ['react-hot', 'babel-loader'], exclude: /node_modules/ },
-          { test: /\.jsx?$/, loaders: ['react-hot', 'babel-loader'], exclude: /node_modules/ },
-          { test: /\.css$/, loader: "style!css" },
-          { test: /\.svg$/, loader: "raw" },
-          {
-        test: /\.es6\.js$/, loader: "babel-loader",
-        query: {
-          presets: ['es2015']
-        }
-      }
-      ]
-  }/*,
-    query: {presets: ['es2015', 'react'] }*/
-=======
         {
           test: /\.jsx?$/,
           exclude: /(node_modules|bower_components)/,
@@ -52,5 +37,4 @@ module.exports = {
       }
   ]
   }
->>>>>>> fd6b593dad280c2d2dbdb918f55fa76b20ff96ee
 };
