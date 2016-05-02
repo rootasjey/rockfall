@@ -4,8 +4,9 @@ var Hello = React.createClass({
     render: function () {
         return (
             <p>
-            <h1>Hello World!</h1>!
-            It is {this.props.date.toTimeStrin()}
+            <span>Hello World!</span>!
+            <span>This is a test</span>
+            It is {this.props.date.toLocaleString('en-US')}
             </p>
         );
     }
