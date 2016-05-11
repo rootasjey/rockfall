@@ -10,7 +10,7 @@ A Connect Four game revisited!
 
 ```> push "my commit message"```
 
-## build with
+## built with
 
 * [React](https://facebook.github.io/react/)
 * [Redux](http://redux.js.org/)

@@ -23,12 +23,6 @@ module.exports = {
       loaders: ['babel'],
       include: path.join(__dirname, 'src')
       // exclude: /(node_modules|bower_components)/
-    }
-    // ,{
-    //   test: /\.scss$/,
-    //   loaders: ['style', 'css', 'sass'],
-    //   include: path.join(__dirname, 'src/stylesheets')
-    // }
-  ]
+    }]
   }
 };
