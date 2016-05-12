@@ -23,6 +23,10 @@ module.exports = {
       loaders: ['babel'],
       include: path.join(__dirname, 'src')
       // exclude: /(node_modules|bower_components)/
+    }, {
+      test: /\.svg$/,
+      loader: 'babel!svg-react',
+      exclude: /(node_modules|bower_components)/
     }]
   }
 };

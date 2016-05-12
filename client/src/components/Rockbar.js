@@ -4,6 +4,8 @@ import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 
+var Logo = require('../assets/icons/rockfall_0.svg');
+
 /**
  * /////////////
  * Toolbar class
@@ -18,6 +20,14 @@ export default class Rockbar extends React.Component {
      * Component's styles definition
      */
     styles: {
+      logo: {
+        cursor: 'pointer',
+
+        marginTop: 10,
+
+        top: 5,
+        position: 'relative'
+      },
       toolbar: {
         bottom: 0,
         left: 0,
@@ -79,7 +89,7 @@ export default class Rockbar extends React.Component {
   render() {
     return (
       <Toolbar style={this.props.styles.toolbar} >
-        <ToolbarTitle text="rockfall" style={this.props.styles.button} />
+        <Logo style={this.props.styles.logo} />
 
         <RaisedButton label="play" style={this.props.styles.buttonPlay}
           labelColor='white' backgroundColor='#e74c3c'

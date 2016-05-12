@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 // import injectTapEventPlugin from 'react-tap-event-plugin';
 import Layout from './containers/Layout';
-import Counter from './components/Counter';
+import HomePage from './containers/HomePage';
 import Rockbar from './components/Rockbar';
 
 // If you use React Router, make this component
@@ -25,6 +25,7 @@ export default class App extends Component {
   render() {
     return (
       <Layout>
+        <HomePage/>
         <Rockbar />
       </Layout>
     );
