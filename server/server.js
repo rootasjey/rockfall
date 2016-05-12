@@ -86,6 +86,21 @@ var server = http.createServer(app).listen(app.get('port'), function() {
     console.log('Rockfall is live on ' + addressServer + ':' + app.get('port'));
 });
 
+/*
 var Sequelize = require('sequelize');
 var Config = require('./model/config.js');
-var User = require('./model/user.js');
+var User = require('./model/User.js');
+
+var userDB = new User();
+
+userDB.initDB(Config.dialect, Config.developpement.user, Config.developpement.password, Config.developpement.address, Config.developpement.port, Config.developpement.name, function(){
+    console.log('initialisation terminee!');
+});
+
+var userParam = {
+    pseudo:'john',
+    password:'Doeppo'
+};
+
+userDB.createModel(userParam, console.log, console.log);
+*/

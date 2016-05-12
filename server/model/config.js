@@ -1,6 +1,14 @@
-var config = {
+module.exports = {
 
 
+    production: {
+
+        user:'rockfall',
+        password:'rockfall',
+        address:'127.0.0.1',
+        port:'3306',
+        name:'rockfall'
+    },
 
     developpement: {
 

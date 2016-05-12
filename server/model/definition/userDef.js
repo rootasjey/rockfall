@@ -1,4 +1,6 @@
-var userDef = {
+var Sequelize = require('sequelize');
+
+module.exports = {
 
     uid: {
         type: Sequelize.BIGINT,
