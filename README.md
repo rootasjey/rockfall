@@ -1,13 +1,16 @@
 # rockfall
 A Connect Four game revisited!
 
+## version
+0.0.2
+
 ![Rockfall](rockfall.png "Rockfall")
 
-## Push code to the repo with one command
+## push code to the repo with one command
 
 ```> push "my commit message"```
 
-## Build with
+## built with
 
 * [React](https://facebook.github.io/react/)
 * [Redux](http://redux.js.org/)

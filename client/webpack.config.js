@@ -1,40 +1,32 @@
+var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
   devtool: 'eval',
   entry: [
-    "./index.js"
+    'react-hot-loader/patch',
+    'webpack-dev-server/client?http://localhost:3000',
+    'webpack/hot/only-dev-server',
+    './src/index'
   ],
   output: {
-    path: __dirname+"/build",
-    filename: "main.js"
+    path: path.join(__dirname, 'dist'),
+    filename: 'bundle.js',
+    publicPath: '/static/'
   },
   plugins: [
-    new webpack.NoErrorsPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.HotModuleReplacementPlugin()
   ],
-  resolve: {
-    extensions: ['', '.js', '.jsx','es6.js']
-  },
   module: {
-      loaders: [
-        {
-          test: /\.jsx?$/,
-          exclude: /(node_modules|bower_components)/,
-          loader: 'babel', // 'babel-loader' is also a legal name to reference
-          query: {
-            presets: ['es2015', 'react']
-          }
-      },
-      {
-        test: /\.js$/,
-        exclude: /(node_modules|bower_components)/,
-        loader: 'babel', // 'babel-loader' is also a legal name to reference
-        query: {
-          presets: ['es2015', 'react']
-        }
-      }
-  ]
+    loaders: [{
+      test: /\.js$/,
+      loaders: ['babel'],
+      include: path.join(__dirname, 'src')
+      // exclude: /(node_modules|bower_components)/
+    }, {
+      test: /\.svg$/,
+      loader: 'babel!svg-react',
+      exclude: /(node_modules|bower_components)/
+    }]
   }
 };

@@ -15,7 +15,7 @@ var express 		= require('express'),	// web dev framework
 // ----------------
 var app = express();
 // ----------------
-app.set('port', process.env.PORT || 3003);
+app.set('port', process.env.PORT || 3001);
 app.set('view engine', 'pug');
 app.set('views', __dirname + '/../client');	// folder templates
 app.use(morgan('dev'));					// logging output
@@ -41,7 +41,6 @@ app.get('/', function(req, res) {
     }
 
        res.render('index');
-
     //res.status(200).send("success!");
 })
 /*
@@ -79,12 +78,12 @@ app.use(function (err, req, res, next) {
 // Listen port => server start
 var server = http.createServer(app).listen(app.get('port'), function() {
     if(server.address().address != '0.0.0.0') {
-        addressServer = server.address().address + ":" + app.get('port');
+        addressServer = server.address().address + ':' + app.get('port');
     } else{
         addressServer += ":" + app.get('port');
     }
 
-    console.log('Rockfall is live on port :' + app.get('port'));
+    console.log('Rockfall is live on ' + addressServer + ':' + app.get('port'));
 });
 
 var Sequelize = require('sequelize');
