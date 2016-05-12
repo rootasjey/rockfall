@@ -86,3 +86,7 @@ var server = http.createServer(app).listen(app.get('port'), function() {
 
     console.log('Rockfall is live on port :' + app.get('port'));
 });
+
+var Sequelize = require('sequelize');
+var Config = require('./model/config.js');
+var User = require('./model/user.js');

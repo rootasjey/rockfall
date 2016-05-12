@@ -25,6 +25,8 @@
     "express": "^4.13.4",
     "method-override": "^2.3.5",
     "morgan": "^1.7.0",
-    "pug": "^2.0.0-alpha6"
+    "mysql": "^2.10.2",
+    "pug": "^2.0.0-alpha6",
+    "sequelize": "^3.22.0"
   }
 }
