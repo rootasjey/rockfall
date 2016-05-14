@@ -1,5 +1,11 @@
-# Client
+Client
+======
 
+## TODO
+* add classes (rock, board, bonuses)
+* board rules
+
+## Tree
 ```
 client
 |-- index.html                          // The main container for the client application
@@ -28,9 +34,3 @@ client
     |-- helpers/                        // Helper functions used throughout the application
     |   ....
 ```
-
-## TODO
-
-* Choose betweet JS CSS or SASS require
-* Delete npm modules:
-node-sass sass-loader css-loader style-loader
