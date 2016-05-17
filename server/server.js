@@ -43,6 +43,28 @@ app.get('/', function(req, res) {
        res.render('index');
     //res.status(200).send("success!");
 })
+
+var db = require('./db.js');
+//var db_ready = false;
+//console.log("1 : "+db_ready);
+db.initialisation();
+//console.log("3 : "+db_ready);
+app.post('/createUser', function(req, res) {
+
+    //console.log(JSON.stringify(req.body));
+    var user = {
+        email : req.body['email'],
+        pseudo: req.body['pseudo']
+    };
+
+    db.getReady();
+    db.userDB.createModel(user, console.log, console.log);
+    //console.log('req.body.name', req.body['name']);
+});
+/*
+setTimeout( function(){
+    console.log("4 : "+db_ready);
+} ,2000);*/
 /*
 .use('/user', userRoute)
 
@@ -86,21 +108,3 @@ var server = http.createServer(app).listen(app.get('port'), function() {
     console.log('Rockfall is live on ' + addressServer + ':' + app.get('port'));
 });
 
-/*
-var Sequelize = require('sequelize');
-var Config = require('./model/config.js');
-var User = require('./model/User.js');
-
-var userDB = new User();
-
-userDB.initDB(Config.dialect, Config.developpement.user, Config.developpement.password, Config.developpement.address, Config.developpement.port, Config.developpement.name, function(){
-    console.log('initialisation terminee!');
-});
-
-var userParam = {
-    pseudo:'john',
-    password:'Doeppo'
-};
-
-userDB.createModel(userParam, console.log, console.log);
-*/

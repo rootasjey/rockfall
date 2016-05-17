@@ -15,6 +15,14 @@ module.exports = {
           len:[2,10],
         }
     },
+    email : {
+        type: Sequelize.STRING,
+        allowNull:false,
+        validate:{
+          isEmail:true,
+        }
+    },
+    /*
     password_hash: Sequelize.STRING,
     password: {
         type: Sequelize.VIRTUAL,
@@ -26,7 +34,7 @@ module.exports = {
             len:[5,20],
             isAlphanumeric:true
         }
-    },
+    },*/
     experience : {
         type: Sequelize.BIGINT,
         allowNull:false,

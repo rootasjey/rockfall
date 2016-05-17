@@ -6,8 +6,8 @@ var userDefinition = require('./definition/userDef.js');
 
 var validation = {
                     pseudoPassword: function() {
-                        if ((this.pseudo === null) || (this.password === null)) {
-                            throw new Error('Require pseudo, password field!')
+                        if ((this.pseudo === null) || (this.email === null)) {
+                            throw new Error('Require pseudo, email field!')
                         }
                     }
                  };
@@ -17,4 +17,5 @@ module.exports = class User extends Model{
     constructor(){
         super('user', userDefinition, validation);
     }
+
 }
