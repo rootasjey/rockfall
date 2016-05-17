@@ -3,7 +3,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 // import injectTapEventPlugin from 'react-tap-event-plugin';
 import Layout from './containers/Layout';
 import HomePage from './containers/HomePage';
-import Rockbar from './components/Rockbar';
+import Rockbar from './containers/Rockbar';
 
 // If you use React Router, make this component
 // render <Router> with your routes. Currently,
