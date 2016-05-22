@@ -1,5 +1,5 @@
 // ///////////////////
 // UserActionsTypes.js
 // ///////////////////
-export const LEADDERBOARD_UI_OPEN   = 'LEADDERBOARD_UI_OPEN';
-export const LEADDERBOARD_UI_CLOSE  = 'LEADDERBOARD_UI_CLOSE';
+export const OPEN_LEADDERBOARD_UI   = 'OPEN_LEADDERBOARD_UI';
+export const CLOSE_LEADDERBOARD_UI  = 'CLOSE_LEADDERBOARD_UI';

@@ -1,9 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 // import injectTapEventPlugin from 'react-tap-event-plugin';
+
+// Custom Components
 import Layout from './containers/Layout';
 import HomePage from './containers/HomePage';
-import Rockbar from './containers/Rockbar';
+import ContainerComponents from './containers/ContainerComponents';
 
 // If you use React Router, make this component
 // render <Router> with your routes. Currently,
@@ -25,8 +27,7 @@ export default class App extends Component {
   render() {
     return (
       <Layout>
-        <HomePage/>
-        <Rockbar />
+        <ContainerComponents />
       </Layout>
     );
   }

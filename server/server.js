@@ -43,6 +43,9 @@ app.get('/', function(req, res) {
        res.render('index');
     //res.status(200).send("success!");
 })
+.get('/api/hello', function (req, res) {
+  res.status(200).send('hello');
+});
 
 var db = require('./db.js');
 //var db_ready = false;
@@ -72,7 +75,7 @@ setTimeout( function(){
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
-})*/;
+});*/
 
 // Development error handler
 // Will print stacktrace
@@ -107,4 +110,3 @@ var server = http.createServer(app).listen(app.get('port'), function() {
 
     console.log('Rockfall is live on ' + addressServer + ':' + app.get('port'));
 });
-

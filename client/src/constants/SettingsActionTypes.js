@@ -1,7 +1,7 @@
 // ///////////////////////
 // SettingsActionsTypes.js
 // ///////////////////////
-export const SETTINGS_UI_OPEN   = 'SETTINGS_UI_OPEN';
-export const SETTINGS_UI_CLOSE  = 'SETTINGS_UI_CLOSE';
-export const SETTINGS_SAVE      = 'SETTINGS_SAVE';
-export const SETTINGS_RESET     = 'SETTINGS_RESET';
+export const OPEN_SETTINGS_UI   = 'OPEN_SETTINGS_UI';
+export const CLOSE_SETTINGS_UI  = 'CLOSE_SETTINGS_UI';
+export const SAVE_SETTINGS      = 'SAVE_SETTINGS';
+export const RESET_SETTINGS     = 'RESET_SETTINGS';

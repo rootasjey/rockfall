@@ -6,4 +6,4 @@ import rockfallApp from '../reducers/index';
 
 let store = createStore(rockfallApp);
 
-console.log(store.getState());
+// console.log(store.getState());

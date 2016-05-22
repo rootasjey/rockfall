@@ -12,6 +12,7 @@ const initialState = {
   playersById: {},
   user: false,       // <-- False if not logged in, else its an object
   views: {
+    main        : false, // ContainerComponents UI
     leadderboard: false,
     messages    : false,
     play        : false,

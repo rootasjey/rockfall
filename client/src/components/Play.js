@@ -4,12 +4,15 @@ import Paper from 'material-ui/Paper';
 
 /**
  * ////////////////////
- * Settings class
+ * Play class
  * ////////////////////
  */
-export default class Settings extends React.Component {
+export default class Play extends React.Component {
   static defaultProps = {
     styles: {
+      container: {
+        display: 'none'
+      },
       buttonPlay: {
         left: '28%',
         position: 'relative'
@@ -29,9 +32,7 @@ export default class Settings extends React.Component {
 
   render () {
     return (
-      <RaisedButton label="play" style={this.props.styles.buttonPlay}
-        labelColor='white' backgroundColor='#e74c3c'
-        onClick={this.handleClickPlay}/>
+      <Paper style={this.props.styles.container} zDepth={0}></Paper>
     )
   }
 }

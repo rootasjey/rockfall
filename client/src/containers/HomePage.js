@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
-var Logo = require('../assets/icons/rockfall_0.svg');
+import ContainerComponents from './ContainerComponents';
+var Logo = require('../assets/icons/rockfall_logo.svg');
 
 export default class HomePage extends React.Component {
   /**
