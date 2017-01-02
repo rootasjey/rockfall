@@ -1,8 +1,8 @@
 # rockfall
-A Connect Four game revisited!
+A Connect Four game built with JavaScript
 
 ## version
-0.0.2
+0.1.0
 
 ![Rockfall](rockfall.png "Rockfall")
 
@@ -12,7 +12,4 @@ A Connect Four game revisited!
 
 ## built with
 
-* [React](https://facebook.github.io/react/)
-* [Redux](http://redux.js.org/)
-* [Expressjs](http://expressjs.com)
-* [Phaser.io](http://phaser.io/)
+* [Preact](https://preactjs.com/)
