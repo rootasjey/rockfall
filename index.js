@@ -1,5 +1,4 @@
 import {h, render} from 'preact';
-
 // console.log(window.location.href);
 
 let root;
