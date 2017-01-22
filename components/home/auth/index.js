@@ -17,7 +17,7 @@ export default class Auth extends Component {
 
   request(arg) {
     let req = new XMLHttpRequest();
-    req.open(arg.method, arg.url, true);
+    req.open(arg.method || 'GET', arg.url, true);
     req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
     req.onreadystatechange = function () {
       if (req.readyState === 4) {
@@ -35,7 +35,6 @@ export default class Auth extends Component {
 
   componentWillMount() {
     this.request({
-      method: 'GET', 
       url: '/auth/google/url',
       success: (url) => {
         this.setState({urls: {google: url}})
@@ -43,17 +42,23 @@ export default class Auth extends Component {
     });
 
     this.request({
-      method: 'GET', 
       url: '/auth/facebook/url',
       success: (url) => {
         this.setState({urls: {facebook: url}})
+      }
+    });
+
+    this.request({
+      url: '/auth/twitter/url',
+      success: (url) => {
+        this.setState({urls: {twitter: url}})
       }
     });
   }
 
   singinGoogle() {
     popupTools.popup(this.state.urls.google, 'google auth', {}, (err, resp) => {
-      if (err) {console.error(err);}
+      if (err) { console.error(err) }
       console.log(resp);
       this.setState({user: resp});
     });
@@ -61,7 +66,15 @@ export default class Auth extends Component {
 
   singinFacebook() {
     popupTools.popup(this.state.urls.facebook, 'facebook auth', {}, (err, resp) => {
-      if (err) {console.error(err);}
+      if (err) { console.error(err) }
+      console.log(resp);
+      this.setState({user: resp});
+    });
+  }
+
+  singinTwitter() {
+     popupTools.popup(this.state.urls.twitter, 'facebook auth', {}, (err, resp) => {
+      if (err) { console.error(err) }
       console.log(resp);
       this.setState({user: resp});
     });
@@ -82,7 +95,7 @@ export default class Auth extends Component {
           facebook
         </div>
 
-        <div {...buttonAuth} >
+        <div {...buttonAuth} onClick={() => this.singinTwitter()} >
           twitter
         </div>
 

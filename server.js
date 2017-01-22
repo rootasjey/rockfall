@@ -14,7 +14,8 @@ app
   res.sendFile(__dirname + '/index.html');
 })
 .use('/auth/google/', require('./routes/google'))
-.use('/auth/facebook/', require('./routes/facebook'));
+.use('/auth/facebook/', require('./routes/facebook'))
+.use('/auth/twitter/', require('./routes/twitter'));
 
 if (require.main === module) {
   var server = http.createServer(app);
