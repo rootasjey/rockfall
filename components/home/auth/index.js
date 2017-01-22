@@ -1,0 +1,133 @@
+import { h, Component } from 'preact';
+import { route } from 'preact-router';
+import { css } from 'glamor';
+
+var popupTools = require('popup-tools');
+
+export default class Auth extends Component {
+  state = {
+    urls: {
+      google: '',
+      facebook: '',
+      microsoft: '',
+      twitter: '',
+    },
+    user: {}
+  }
+
+  request(arg) {
+    let req = new XMLHttpRequest();
+    req.open(arg.method, arg.url, true);
+    req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+    req.onreadystatechange = function () {
+      if (req.readyState === 4) {
+        if (req.status === 200) {
+          arg.success(req.response, req);
+          return;
+        }
+
+        console.error('The request failed');
+        arg.failure(req.response, req);
+      }
+    }.bind(this);
+    req.send(JSON.stringify(arg.data));
+  }
+
+  componentWillMount() {
+    this.request({
+      method: 'GET', 
+      url: '/auth/google/url',
+      success: (url) => {
+        this.setState({urls: {google: url}})
+      }
+    });
+  }
+
+  singinGoogle() {
+    popupTools.popup(this.state.urls.google, 'google auth', {}, (err, resp) => {
+      if (err) {console.error(err);}
+      console.log(resp);
+      this.setState({user: resp});
+    });
+  }
+
+  singinFacebook() {
+    
+  }
+
+  render() {
+    return (
+      <div {...containerStyle} >
+        <div>
+          Keep your progression by singin with...
+        </div>
+
+        <div {...buttonAuth} onClick={() => this.singinGoogle()}>
+          google
+        </div>
+
+        <div {...buttonAuth} >
+          facebook
+        </div>
+
+        <div {...buttonAuth} >
+          twitter
+        </div>
+
+        <div {...buttonAuth} >
+          microsoft
+        </div>
+
+        <div {...anonymousStyle} >
+          ...Or stay anonymous
+        </div>
+
+        <div {...css(buttonAuth, playButton)} >
+          play
+        </div>
+
+      </div>
+    );
+  }
+}
+
+// /////////
+// Styles //
+// /////////
+const containerStyle = css({
+  width: '60%',
+  margin: 'auto',
+  marginTop: '100px',
+
+  textAlign: 'center'
+});
+
+const anonymousStyle = css({
+  margin: '20px'
+});
+
+const playButton = css({
+  background: '#F04903'
+});
+
+const buttonAuth = css({
+  color: 'white',
+
+  height: '20px',
+
+  cursor: 'pointer',
+
+  padding: '10px 30px',
+  margin: '10px 5px',
+  display: 'inline-block',
+
+  background: 'black',
+  transition: '.5s',
+
+  ':hover': {
+    padding: '10px 40px',
+    MozBoxShadow: '0 0 10px #000000',
+    WebkitBoxShadow: '0 0 10px #000000',
+    boxShadow: '0 0 10px #000000'
+  }
+});
