@@ -17,6 +17,7 @@
     "fb": "^1.1.1",
     "glamor": "^2.20.22",
     "googleapis": "^16.1.0",
+    "node-fetch": "^1.6.3",
     "node-twitter-api": "^1.8.0",
     "popup-tools": "^1.0.1",
     "preact": "^7.1.0",

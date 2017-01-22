@@ -37,47 +37,62 @@ export default class Auth extends Component {
     this.request({
       url: '/auth/google/url',
       success: (url) => {
-        this.setState({urls: {google: url}})
+        this.setState({...this.state, urls: {...this.state.urls, google: url}})
       }
-    });
+    })
 
     this.request({
       url: '/auth/facebook/url',
       success: (url) => {
-        this.setState({urls: {facebook: url}})
+        this.setState({...this.state, urls: {...this.state.urls, facebook: url}})
       }
-    });
+    })
 
     this.request({
       url: '/auth/twitter/url',
       success: (url) => {
-        this.setState({urls: {twitter: url}})
+        this.setState({...this.state, urls: {...this.state.urls, twitter: url}})
       }
-    });
+    })
+
+    this.request({
+      url: 'auth/microsoft/url',
+      success: (url) => {
+        this.setState({...this.state, urls: {...this.state.urls, microsoft: url}})
+      }
+    })
   }
 
   singinGoogle() {
     popupTools.popup(this.state.urls.google, 'google auth', {}, (err, resp) => {
       if (err) { console.error(err) }
-      console.log(resp);
-      this.setState({user: resp});
-    });
+      console.log(resp)
+      this.setState({user: resp})
+    })
   }
 
   singinFacebook() {
     popupTools.popup(this.state.urls.facebook, 'facebook auth', {}, (err, resp) => {
       if (err) { console.error(err) }
-      console.log(resp);
-      this.setState({user: resp});
-    });
+      console.log(resp)
+      this.setState({user: resp})
+    })
   }
 
   singinTwitter() {
-     popupTools.popup(this.state.urls.twitter, 'facebook auth', {}, (err, resp) => {
+    popupTools.popup(this.state.urls.twitter, 'twitter auth', {}, (err, resp) => {
       if (err) { console.error(err) }
-      console.log(resp);
-      this.setState({user: resp});
-    });
+      console.log(resp)
+      this.setState({user: resp})
+    })
+  }
+
+  singinMicrosoft() {
+    popupTools.popup(this.state.urls.microsoft, 'microsoft auth', {}, (err, resp) => {
+      if (err) { console.error(err) }
+      console.log(resp)
+      this.setState({user: resp})
+    })
   }
 
   render() {
@@ -87,19 +102,19 @@ export default class Auth extends Component {
           Keep your progression by singin with...
         </div>
 
-        <div {...buttonAuth} onClick={() => this.singinGoogle()} >
+        <div {...button} onClick={() => this.singinGoogle()} >
           google
         </div>
 
-        <div {...buttonAuth} onClick={() => this.singinFacebook()} >
+        <div {...button} onClick={() => this.singinFacebook()} >
           facebook
         </div>
 
-        <div {...buttonAuth} onClick={() => this.singinTwitter()} >
+        <div {...button} onClick={() => this.singinTwitter()} >
           twitter
         </div>
 
-        <div {...buttonAuth} >
+        <div {...button} onClick={() => this.singinMicrosoft()} >
           microsoft
         </div>
 
@@ -107,7 +122,7 @@ export default class Auth extends Component {
           ...Or stay anonymous
         </div>
 
-        <div {...css(buttonAuth, playButton)} >
+        <div {...css(button, playButton)} >
           play
         </div>
 
@@ -135,7 +150,7 @@ const playButton = css({
   background: '#F04903'
 });
 
-const buttonAuth = css({
+const button = css({
   color: 'white',
 
   height: '20px',

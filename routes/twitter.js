@@ -10,9 +10,9 @@ var twitter = new twitterAPI({
   consumerSecret: 'uh5hvelU5kJpkLnKNTryAhu9lY1shtw4dnI3ENqLbsNRFpW3nH',
   callback: 'http://localhost:8080/auth/twitter/redirect',
   x_auth_access_type: "read"
-});
+})
 
-var _token, _tokenSecret;
+var _token, _tokenSecret
 
 router.get('/url', (req, res) => {
   twitter.getRequestToken((err, reqToken, reqTokenSecret, results) => {

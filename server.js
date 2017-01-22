@@ -15,7 +15,8 @@ app
 })
 .use('/auth/google/', require('./routes/google'))
 .use('/auth/facebook/', require('./routes/facebook'))
-.use('/auth/twitter/', require('./routes/twitter'));
+.use('/auth/twitter/', require('./routes/twitter'))
+.use('/auth/microsoft/', require('./routes/microsoft'));
 
 if (require.main === module) {
   var server = http.createServer(app);
