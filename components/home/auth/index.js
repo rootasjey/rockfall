@@ -1,8 +1,13 @@
-import { h, Component } from 'preact';
-import { route } from 'preact-router';
-import { css } from 'glamor';
+import { h, Component } from 'preact'
+import { route } from 'preact-router'
+import { css } from 'glamor'
 
-var popupTools = require('popup-tools');
+var popupTools = require('popup-tools')
+
+const facebookIcon  = require('file-loader!./icons/facebook.png')
+const googleIcon    = require('file-loader!./icons/gplus.png')
+const twitterIcon   = require('file-loader!./icons/twitter.png')
+const microsoftIcon = require('file-loader!./icons/microsoft.png')
 
 export default class Auth extends Component {
   state = {
@@ -98,27 +103,27 @@ export default class Auth extends Component {
   render() {
     return (
       <div {...containerStyle} >
-        <div>
+        <div {...textStyle} >
           Keep your progression by singin with...
         </div>
 
-        <div {...button} onClick={() => this.singinGoogle()} >
-          google
+        <div {...bubble} onClick={() => this.singinGoogle()} >
+          <img src={googleIcon} alt="google icon"/>
         </div>
 
-        <div {...button} onClick={() => this.singinFacebook()} >
-          facebook
+        <div {...bubble} onClick={() => this.singinFacebook()} >
+          <img src={facebookIcon} alt="facebook icon" />
         </div>
 
-        <div {...button} onClick={() => this.singinTwitter()} >
-          twitter
+        <div {...bubble} onClick={() => this.singinTwitter()} >
+          <img src={twitterIcon} alt="twitter icon"/>
         </div>
 
-        <div {...button} onClick={() => this.singinMicrosoft()} >
-          microsoft
+        <div {...bubble} onClick={() => this.singinMicrosoft()} >
+          <img src={microsoftIcon} alt="microsoft icon"/>
         </div>
 
-        <div {...anonymousStyle} >
+        <div {...textStyle} >
           ...Or stay anonymous
         </div>
 
@@ -136,19 +141,52 @@ export default class Auth extends Component {
 // /////////
 const containerStyle = css({
   width: '60%',
-  margin: 'auto',
-  marginTop: '100px',
+  margin: '70px auto',
 
   textAlign: 'center'
-});
+})
 
-const anonymousStyle = css({
-  margin: '20px'
-});
+const textStyle = css({
+  margin: '40px'
+})
 
 const playButton = css({
   background: '#F04903'
-});
+})
+
+const bubble = css({
+  color: 'white',
+
+  height: 90,
+  width: 90,
+
+  lineHeight: '90px',
+
+  cursor: 'pointer',
+
+  padding: '10px',
+  margin: '10px 5px',
+  display: 'inline-block',
+
+  borderRadius: 90,
+  
+  background: 'black',
+  transition: '.5s',
+
+  ':hover': {
+    height: 100,
+    width: 100,
+    MozBoxShadow: '0 0 10px #000000',
+    WebkitBoxShadow: '0 0 10px #000000',
+    boxShadow: '0 0 10px #000000'
+  },
+
+  ' img': {
+    height: 60,
+    width: 60,
+    marginTop: 15
+  }
+})
 
 const button = css({
   color: 'white',
@@ -170,4 +208,4 @@ const button = css({
     WebkitBoxShadow: '0 0 10px #000000',
     boxShadow: '0 0 10px #000000'
   }
-});
+})
