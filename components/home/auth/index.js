@@ -41,6 +41,14 @@ export default class Auth extends Component {
         this.setState({urls: {google: url}})
       }
     });
+
+    this.request({
+      method: 'GET', 
+      url: '/auth/facebook/url',
+      success: (url) => {
+        this.setState({urls: {facebook: url}})
+      }
+    });
   }
 
   singinGoogle() {
@@ -52,7 +60,11 @@ export default class Auth extends Component {
   }
 
   singinFacebook() {
-    
+    popupTools.popup(this.state.urls.facebook, 'facebook auth', {}, (err, resp) => {
+      if (err) {console.error(err);}
+      console.log(resp);
+      this.setState({user: resp});
+    });
   }
 
   render() {
@@ -62,11 +74,11 @@ export default class Auth extends Component {
           Keep your progression by singin with...
         </div>
 
-        <div {...buttonAuth} onClick={() => this.singinGoogle()}>
+        <div {...buttonAuth} onClick={() => this.singinGoogle()} >
           google
         </div>
 
-        <div {...buttonAuth} >
+        <div {...buttonAuth} onClick={() => this.singinFacebook()} >
           facebook
         </div>
 

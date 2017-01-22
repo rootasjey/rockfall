@@ -13,7 +13,8 @@ app
 .get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 })
-.use('/auth/google/', require('./routes/google'));
+.use('/auth/google/', require('./routes/google'))
+.use('/auth/facebook/', require('./routes/facebook'));
 
 if (require.main === module) {
   var server = http.createServer(app);

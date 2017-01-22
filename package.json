@@ -10,10 +10,11 @@
   "license": "ISC",
   "scripts": {
     "prod": "node server.js",
-    "dev": "nodemon --watch server.js server.js",
+    "dev": "nodemon --watch server.js --watch routes server.js",
     "build": "webpack"
   },
   "dependencies": {
+    "fb": "^1.1.1",
     "glamor": "^2.20.22",
     "googleapis": "^16.1.0",
     "popup-tools": "^1.0.1",
