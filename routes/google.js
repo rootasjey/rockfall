@@ -5,6 +5,8 @@ const router      = express.Router();
 const google      = require('googleapis');
 const popupTools  = require('popup-tools');
 
+var TableUser = require('./tableUsers');
+
 var OAuth2, oauth2Client, 
     plus = google.plus('v1');
 
@@ -20,8 +22,8 @@ router
   let url = oauth2Client.generateAuthUrl({
     access_type: 'online',
     scope: [
-      'https://www.googleapis.com/auth/plus.me', 
-      'https://www.googleapis.com/auth/userinfo.email']
+      'https://www.googleapis.com/auth/plus.me'
+      /*,'https://www.googleapis.com/auth/userinfo.email'*/]
   });
   res.status(200).send(url);
 })
@@ -35,9 +37,15 @@ router
     plus.people.get({
       userId: 'me',
       auth: oauth2Client
-    }, (err, response) => {
-      if (err) {console.error(err);}
-      res.status(200).send(popupTools.popupResponse({user: response}));
+    }, (err, jsonUser) => {
+      if (err) { console.error(err) }
+
+      var users = new TableUser();
+      users
+        .login(`google-${jsonUser.id}`, jsonUser.displayName)
+        .then((azureUser) => {
+          res.status(200).send(popupTools.popupResponse({user: azureUser}))
+        })
     });
   });
 });

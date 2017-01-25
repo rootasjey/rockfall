@@ -7,10 +7,13 @@ const popupTools  = require('popup-tools');
 
 var clientId    = '00000000481C9865'
 var secret      = 'PdmN3fjPXMWcz7fhTmBtfFQ'
-var scopes      = 'wl.signin,wl.emails'
+var scopes      = 'wl.signin' /*,wl.emails */
 var redirectURI = 'http://localhost:8080/auth/microsoft/redirect'
 
-router.get('/url', (req, res) => {
+var TableUser = require('./tableUsers');
+
+router
+.get('/url', (req, res) => {
   var url = `https://login.live.com/oauth20_authorize.srf?client_id=${clientId}` + 
             `&scope=${scopes}&grant_type=authorization_code` +
             `&response_type=code&redirect_uri=${redirectURI}&state=idle`
@@ -30,9 +33,13 @@ router.get('/url', (req, res) => {
 
     fetch(query)
     .then((rawUser) => rawUser.json())
-    .then(user => {
-      res.status(200).send(popupTools.popupResponse({user: user}))
-      
+    .then(jsonUser => {
+      var users = new TableUser();
+      users
+        .login(`microsoft-${jsonUser.id}`, jsonUser.name)
+        .then((azureUser) => {
+          res.status(200).send(popupTools.popupResponse({user: azureUser}))
+        })
     })
   })
 })

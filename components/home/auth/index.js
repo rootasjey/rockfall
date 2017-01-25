@@ -68,7 +68,7 @@ export default class Auth extends Component {
     })
   }
 
-  singinGoogle() {
+  signinGoogle() {
     popupTools.popup(this.state.urls.google, 'google auth', {}, (err, resp) => {
       if (err) { console.error(err) }
       console.log(resp)
@@ -76,7 +76,7 @@ export default class Auth extends Component {
     })
   }
 
-  singinFacebook() {
+  signinFacebook() {
     popupTools.popup(this.state.urls.facebook, 'facebook auth', {}, (err, resp) => {
       if (err) { console.error(err) }
       console.log(resp)
@@ -84,7 +84,7 @@ export default class Auth extends Component {
     })
   }
 
-  singinTwitter() {
+  signinTwitter() {
     popupTools.popup(this.state.urls.twitter, 'twitter auth', {}, (err, resp) => {
       if (err) { console.error(err) }
       console.log(resp)
@@ -92,7 +92,7 @@ export default class Auth extends Component {
     })
   }
 
-  singinMicrosoft() {
+  signinMicrosoft() {
     popupTools.popup(this.state.urls.microsoft, 'microsoft auth', {}, (err, resp) => {
       if (err) { console.error(err) }
       console.log(resp)
@@ -107,19 +107,19 @@ export default class Auth extends Component {
           Keep your progression by singin with...
         </div>
 
-        <div {...bubble} onClick={() => this.singinGoogle()} >
+        <div {...bubble} onClick={() => this.signinGoogle()} >
           <img src={googleIcon} alt="google icon"/>
         </div>
 
-        <div {...bubble} onClick={() => this.singinFacebook()} >
+        <div {...bubble} onClick={() => this.signinFacebook()} >
           <img src={facebookIcon} alt="facebook icon" />
         </div>
 
-        <div {...bubble} onClick={() => this.singinTwitter()} >
+        <div {...bubble} onClick={() => this.signinTwitter()} >
           <img src={twitterIcon} alt="twitter icon"/>
         </div>
 
-        <div {...bubble} onClick={() => this.singinMicrosoft()} >
+        <div {...bubble} onClick={() => this.signinMicrosoft()} >
           <img src={microsoftIcon} alt="microsoft icon"/>
         </div>
 

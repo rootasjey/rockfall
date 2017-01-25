@@ -5,10 +5,12 @@ const router      = express.Router();
 const FB          = require('fb');
 const popupTools  = require('popup-tools');
 
+var TableUser = require('./tableUsers');
+
 router.get('/url', (req, res) => {
   let url = FB.getLoginUrl({
     appId: '1281899975260609',
-    scope: 'email',
+    // scope: 'email',
     redirect_uri: 'http://localhost:8080/auth/facebook/redirect'
   });
   res.status(200).send(url);
@@ -30,20 +32,22 @@ router.get('/url', (req, res) => {
       let expires = fbRes.expires ? fbRes.expires : 0;
       FB.setAccessToken(accessToken);
       
-      FB.api('/me', { fields: ['id', 'name', 'email'] }, (apiRes) => {
-        if (apiRes && apiRes.error) {
-            if(apiRes.error.code === 'ETIMEDOUT') {
+      FB.api('/me', { fields: ['id', 'name', 'email'] }, (jsonUser) => {
+        if (jsonUser && jsonUser.error) {
+          if(jsonUser.error.code === 'ETIMEDOUT') {
             console.log('request timeout');
             res.status(500).send('request timeout');
           }
-          else {
-            console.log('error', res.error);
-            res.status(500).send(res.error);
-          }
-          res.sendStatus(500);
+          console.log('error', res.error);
+          res.status(500).send(res.error);
         }
         
-        res.status(200).send(popupTools.popupResponse({user: apiRes}));
+        var users = new TableUser();
+        users
+          .login(`facebook-${jsonUser.id}`, jsonUser.name)
+          .then((azureUser) => {
+            res.status(200).send(popupTools.popupResponse({user: azureUser}))
+          })
       });
   });
   

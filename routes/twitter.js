@@ -5,6 +5,8 @@ const router      = express.Router();
 const twitterAPI  = require('node-twitter-api');
 const popupTools  = require('popup-tools');
 
+var TableUser = require('./tableUsers');
+
 var twitter = new twitterAPI({
   consumerKey: 'Z8tH6fapQux9nQ4reXvAPx48b',
   consumerSecret: 'uh5hvelU5kJpkLnKNTryAhu9lY1shtw4dnI3ENqLbsNRFpW3nH',
@@ -36,14 +38,15 @@ router.get('/url', (req, res) => {
       }
 
       twitter.verifyCredentials(accessToken, accessTokenSecret, {include_email: true}, 
-        (error, data, response) => {
-          if (error) {
-              //something was wrong with either accessToken or accessTokenSecret
-              //start over with Step 1
-              res.status(500).send(error);
-          }
+        (error, jsonUser, response) => {
+          if (error) { res.status(500).send(error) }
           
-          res.status(200).send(popupTools.popupResponse({user: data}));
+          var users = new TableUser();
+          users
+          .login(`twitter-${jsonUser.id}`, jsonUser.name)
+          .then((azureUser) => {
+            res.status(200).send(popupTools.popupResponse({user: azureUser}))
+          })
       });
     });
 });
