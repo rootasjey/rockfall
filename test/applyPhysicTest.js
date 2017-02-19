@@ -4,12 +4,12 @@ var assert = require('assert');
 var plate = require('./_initialData');
 var applyPhysic = require('../lib/applyPhysic');
 
-describe('---- Check physic ----', function() {
+describe('---- Check physic ----', function () {
 
-    it('check piece physic, it should "fall" ', function() {
+    it('check piece physic, it should "fall" ', function () {
 
         let pieceToPlay = {
-            "id":4,
+            "id": 4,
             "x": 2,
             "y": 1,
             "user": 1,
@@ -25,9 +25,9 @@ describe('---- Check physic ----', function() {
 
     });
 
-    it('check piece physic, it shouldn\'t "fall" ', function() {
+    it('check piece physic, it shouldn\'t "fall" ', function () {
         let pieceToPlay = {
-            "id":10,
+            "id": 10,
             "x": 1,
             "y": 3,
             "user": 2,

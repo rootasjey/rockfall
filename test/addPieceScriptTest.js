@@ -80,7 +80,14 @@ describe('---- add piece to party ----', function () {
 
 
         let plateToAddPiece = [
-            [{ "id": 1, "x": 0, "y": 0, "user": 1, "state": 0, "weight": 4 }, 0, 0, 0, 0, 0],
+            [{
+                "id": 1,
+                "x": 0,
+                "y": 0,
+                "user": 1,
+                "state": 0,
+                "weight": 4
+            }, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0],
