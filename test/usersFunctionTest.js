@@ -9,7 +9,7 @@ describe('---- user functions ----', function () {
     it('order users', function () {
 
         assert.equal(0, plate.Users.filter(user => user.order != 0).length);
-        UsersFonction.pickOrderPlayerToPlay(plate.Users);
+        UsersFonction.pickOrderToPlay(plate.Users);
         assert.equal(3, plate.Users.filter(user => user.order != 0).length);
 
         assert.equal(1, plate.Users.filter(user => user.order == 1).length);
