@@ -5,7 +5,7 @@ const router      = express.Router();
 const FB          = require('fb');
 const popupTools  = require('popup-tools');
 
-var TableUser = require('./tableUsers');
+var TableUser = require('../storage/tableUsers');
 
 router.get('/url', (req, res) => {
   let url = FB.getLoginUrl({

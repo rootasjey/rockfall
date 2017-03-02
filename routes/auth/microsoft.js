@@ -10,7 +10,7 @@ var secret      = 'PdmN3fjPXMWcz7fhTmBtfFQ'
 var scopes      = 'wl.signin' /*,wl.emails */
 var redirectURI = 'http://localhost:8080/auth/microsoft/redirect'
 
-var TableUser = require('./tableUsers');
+var TableUser = require('../storage/tableUsers');
 
 router
 .get('/url', (req, res) => {

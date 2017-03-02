@@ -20,6 +20,8 @@ export default class Auth extends Component {
     user: {}
   }
 
+  bubbles = {}
+
   request(arg) {
     let req = new XMLHttpRequest();
     req.open(arg.method || 'GET', arg.url, true);
@@ -38,97 +40,117 @@ export default class Auth extends Component {
     req.send(JSON.stringify(arg.data));
   }
 
-  componentWillMount() {
-    this.request({
-      url: '/auth/google/url',
-      success: (url) => {
-        this.setState({...this.state, urls: {...this.state.urls, google: url}})
-      }
-    })
-
-    this.request({
-      url: '/auth/facebook/url',
-      success: (url) => {
-        this.setState({...this.state, urls: {...this.state.urls, facebook: url}})
-      }
-    })
-
-    this.request({
-      url: '/auth/twitter/url',
-      success: (url) => {
-        this.setState({...this.state, urls: {...this.state.urls, twitter: url}})
-      }
-    })
-
-    this.request({
-      url: 'auth/microsoft/url',
-      success: (url) => {
-        this.setState({...this.state, urls: {...this.state.urls, microsoft: url}})
-      }
+  componentDidMount() {
+    ['google', 'facebook', 'twitter', 'microsoft']
+    .map((service) => {
+      this.request({
+        url: `/auth/${service}/url`,
+        success: (url) => {
+          let urls = {...this.state.urls}
+          urls[service] = url
+          this.setState({...this.state, urls})
+        }
+      })
     })
   }
 
-  signinGoogle() {
-    popupTools.popup(this.state.urls.google, 'google auth', {}, (err, resp) => {
+  signin(service) {
+    if (this.state.user.service) {
+      console.log('already connected');
+      return;
+    }
+
+    popupTools.popup(this.state.urls[service], `${service} auth`, {}, (err, resp) => {
       if (err) { console.error(err) }
-      console.log(resp)
-      this.setState({user: resp})
+
+      let user = {...resp.user, service: service}
+      this.setState({user: user})
+      console.log(this.state.user)
     })
   }
 
-  signinFacebook() {
-    popupTools.popup(this.state.urls.facebook, 'facebook auth', {}, (err, resp) => {
-      if (err) { console.error(err) }
-      console.log(resp)
-      this.setState({user: resp})
+  bubbleStyle(service) {
+    // return default style if the user not connected
+    if (!this.state.user.service) {
+      return bubble
+    }
+
+    if (this.state.user.service == service) {
+      return bubble
+    }
+
+    return css(bubble, {display: 'none'})
+  }
+
+  infosStyle() {
+    if (!this.state.user.service) {
+      return css({display: 'none'})
+    }
+
+    return css({
+      display: 'block'
     })
   }
 
-  signinTwitter() {
-    popupTools.popup(this.state.urls.twitter, 'twitter auth', {}, (err, resp) => {
-      if (err) { console.error(err) }
-      console.log(resp)
-      this.setState({user: resp})
-    })
+  helpStyle(componentStyle) {
+    return this.state.user.service ? 
+      css(componentStyle, {display: 'none'}) : componentStyle;
   }
 
-  signinMicrosoft() {
-    popupTools.popup(this.state.urls.microsoft, 'microsoft auth', {}, (err, resp) => {
-      if (err) { console.error(err) }
-      console.log(resp)
-      this.setState({user: resp})
-    })
+  connectedStyle(componentStyle) {
+    return this.state.user.service ? 
+      componentStyle : css(componentStyle, {display: 'none'});
+  }
+
+  open() {
+
+  }
+  
+  close() {
+
   }
 
   render() {
     return (
       <div {...containerStyle} >
-        <div {...textStyle} >
+        <div {...this.connectedStyle(closeButton)} onClick={() => this.close()} ></div>
+
+        <div {...this.helpStyle(textStyle)} >
           Keep your progression by singin with...
         </div>
 
-        <div {...bubble} onClick={() => this.signinGoogle()} >
+        <div {...this.bubbleStyle('google')} 
+            onClick={() => this.signin('google')} data-service='google'
+            ref={(googleBubble) => {this.bubbles.google = googleBubble}} >
           <img src={googleIcon} alt="google icon"/>
         </div>
 
-        <div {...bubble} onClick={() => this.signinFacebook()} >
+        <div {...this.bubbleStyle('facebook')} 
+            onClick={() => this.signin('facebook')} data-service='facebook' >
           <img src={facebookIcon} alt="facebook icon" />
         </div>
 
-        <div {...bubble} onClick={() => this.signinTwitter()} >
+        <div {...this.bubbleStyle('twitter')} 
+            onClick={() => this.signin('twitter')} data-service='twitter' >
           <img src={twitterIcon} alt="twitter icon"/>
         </div>
 
-        <div {...bubble} onClick={() => this.signinMicrosoft()} >
+        <div {...this.bubbleStyle('microsoft')} 
+            onClick={() => this.signin('microsoft')} data-service='microsoft' >
           <img src={microsoftIcon} alt="microsoft icon"/>
         </div>
 
-        <div {...textStyle} >
+        <div {...this.helpStyle(textStyle)} >
           ...Or stay anonymous
         </div>
 
-        <div {...css(button, playButton)} >
+        <div {...this.helpStyle(css(button, playButton))} >
           play
+        </div>
+
+        <div {...this.infosStyle()} >
+          <div>Hello {this.state.user.username} </div>
+          <div>score: {this.state.user.score} </div>
         </div>
 
       </div>
@@ -142,8 +164,13 @@ export default class Auth extends Component {
 const containerStyle = css({
   width: '60%',
   margin: '70px auto',
+  paddingTop: 70,
 
-  textAlign: 'center'
+  textAlign: 'center',
+
+  overflowY: 'hidden',
+
+  position: 'relative'
 })
 
 const textStyle = css({
@@ -152,6 +179,39 @@ const textStyle = css({
 
 const playButton = css({
   background: '#F04903'
+})
+
+const closeButton = css({
+  position: 'absolute',
+  right: '32px',
+  top: '32px',
+  width: '32px',
+  height: '32px',
+  cursor: 'pointer',
+  opacity: '0.8',
+
+  ':hover': {
+    opacity: '1'
+  },
+
+  ':before': {
+    transform: 'rotate(45deg)',
+    position: 'absolute',
+    left: '15px',
+    content: '" "',
+    height: '33px',
+    width: '2px',
+    backgroundColor: 'white',
+  },
+  ':after': {
+    transform: 'rotate(-45deg)',
+    position: 'absolute',
+    left: '15px',
+    content: '" "',
+    height: '33px',
+    width: '2px',
+    backgroundColor: 'white'
+  }
 })
 
 const bubble = css({

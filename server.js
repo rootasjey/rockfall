@@ -13,10 +13,10 @@ app
 .get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 })
-.use('/auth/google/', require('./routes/google'))
-.use('/auth/facebook/', require('./routes/facebook'))
-.use('/auth/twitter/', require('./routes/twitter'))
-.use('/auth/microsoft/', require('./routes/microsoft'))
+.use('/auth/google/', require('./routes/auth/google'))
+.use('/auth/facebook/', require('./routes/auth/facebook'))
+.use('/auth/twitter/', require('./routes/auth/twitter'))
+.use('/auth/microsoft/', require('./routes/auth/microsoft'))
 .use('/users/', require('./routes/users'))
 
 if (require.main === module) {

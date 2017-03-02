@@ -20,7 +20,7 @@ export default class Home extends Component {
 // Styles //
 // /////////
 const containerStyle = css({
-  height: '90%',
+  // height: '90%',
   width: '90%',
   minHeight: '300px',
   minWidth: '300px',

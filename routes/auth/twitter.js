@@ -5,7 +5,7 @@ const router      = express.Router();
 const twitterAPI  = require('node-twitter-api');
 const popupTools  = require('popup-tools');
 
-var TableUser = require('./tableUsers');
+var TableUser = require('../storage/tableUsers');
 
 var twitter = new twitterAPI({
   consumerKey: 'Z8tH6fapQux9nQ4reXvAPx48b',
