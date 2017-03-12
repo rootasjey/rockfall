@@ -23,7 +23,8 @@
     "node-twitter-api": "^1.8.0",
     "popup-tools": "^1.0.1",
     "preact": "^7.1.0",
-    "preact-compat": "^3.9.4"
+    "preact-compat": "^3.9.4",
+    "node-uuid": "^1.4.7"
   },
   "devDependencies": {
     "babel": "^6.5.2",
