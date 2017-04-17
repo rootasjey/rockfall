@@ -2,14 +2,14 @@
 
 var assert = require('assert');
 var plate = require('./_initialData');
-var UsersFonction = require('../lib/usersFunction');
+var UsersFunction = require('../lib/usersFunction');
 
 describe('---- user functions ----', function () {
 
     it('order users', function () {
 
         assert.equal(0, plate.Users.filter(user => user.order != 0).length);
-        UsersFonction.pickOrderToPlay(plate.Users);
+        UsersFunction.pickOrderToPlay(plate.Users);
         assert.equal(3, plate.Users.filter(user => user.order != 0).length);
 
         assert.equal(1, plate.Users.filter(user => user.order == 1).length);
@@ -21,23 +21,23 @@ describe('---- user functions ----', function () {
     it('change users turn', function () {
 
         assert.equal(0, plate.Users.filter(user => user.turn != 0).length);
-        UsersFonction.getNextUserToPlay(plate.Users);
+        UsersFunction.getNextUserToPlay(plate.Users);
         assert.equal(1, plate.Users.filter(user => user.turn != 0).length);
         assert.equal(2, plate.Users.filter(user => user.turn == 0).length);
 
         assert.equal(1, plate.Users.filter(user => user.turn != 0)[0].order);
-        UsersFonction.getNextUserToPlay(plate.Users);
+        UsersFunction.getNextUserToPlay(plate.Users);
         assert.equal(2, plate.Users.filter(user => user.turn != 0)[0].order);
         assert.equal(1, plate.Users.filter(user => user.turn != 0).length);
         assert.equal(2, plate.Users.filter(user => user.turn == 0).length);
 
-        UsersFonction.getNextUserToPlay(plate.Users);
+        UsersFunction.getNextUserToPlay(plate.Users);
 
         assert.equal(3, plate.Users.filter(user => user.turn != 0)[0].order);
         assert.equal(1, plate.Users.filter(user => user.turn != 0).length);
         assert.equal(2, plate.Users.filter(user => user.turn == 0).length);
 
-        UsersFonction.getNextUserToPlay(plate.Users);
+        UsersFunction.getNextUserToPlay(plate.Users);
 
         assert.equal(1, plate.Users.filter(user => user.turn != 0)[0].order);
         assert.equal(1, plate.Users.filter(user => user.turn != 0).length);

@@ -1,7 +1,7 @@
 "use strict";
 
 let assert = require('assert');
-let UsersFonction = require('../lib/usersFunction');
+let UsersFunction = require('../lib/usersFunction');
 let addPieceScript = require('../lib/addPieceScript');
 let applyRule = require('../lib/applyRule');
 
@@ -38,7 +38,7 @@ describe('---- Script some plays ----', function () {
         };
 
         //1 - First player : {x:0, weight:5}
-        UsersFonction.getNextUserToPlay(usersTest);
+        UsersFunction.getNextUserToPlay(usersTest);
         let firstUser = usersTest.find(user => user.turn == 1);
         let piece = { "id": 1, "x": 0, "y": 0, "state": 0, "weight": firstUser.weightPiece[0], "user": firstUser.id };
         addPieceScript(boardGameTest, indexPieceTest, piece, firstUser);
@@ -47,7 +47,7 @@ describe('---- Script some plays ----', function () {
         assert.equal(boardGameTest[4][0].id, 1);
 
         // 2 - Second player : {x:1, weight: 16}
-        UsersFonction.getNextUserToPlay(usersTest);
+        UsersFunction.getNextUserToPlay(usersTest);
         let secondUser = usersTest.find(user => user.turn == 1);
         piece = { "id": 2, "x": 1, "y": 0, "state": 0, "weight": secondUser.weightPiece[2], "user": secondUser.id };
         addPieceScript(boardGameTest, indexPieceTest, piece, secondUser);
@@ -56,7 +56,7 @@ describe('---- Script some plays ----', function () {
         assert.equal(boardGameTest[4][1].id, 2);
 
         //3 - Third player : {x:2, weight:30}
-        UsersFonction.getNextUserToPlay(usersTest);
+        UsersFunction.getNextUserToPlay(usersTest);
         let thirdUser = usersTest.find(user => user.turn == 1);
         piece = { "id": 3, "x": 2, "y": 0, "state": 0, "weight": thirdUser.weightPiece[2], "user": thirdUser.id };
         addPieceScript(boardGameTest, indexPieceTest, piece, thirdUser);
@@ -65,7 +65,7 @@ describe('---- Script some plays ----', function () {
         assert.equal(boardGameTest[4][2].id, 3);
 
         //4 - First player : {x:3, weigth:15}
-        UsersFonction.getNextUserToPlay(usersTest);
+        UsersFunction.getNextUserToPlay(usersTest);
         firstUser = usersTest.find(user => user.turn == 1);
         piece = { "id": 4, "x": 3, "y": 0, "state": 0, "weight": firstUser.weightPiece[2], "user": firstUser.id };
         addPieceScript(boardGameTest, indexPieceTest, piece, firstUser);
@@ -74,7 +74,7 @@ describe('---- Script some plays ----', function () {
         assert.equal(boardGameTest[4][3].id, 4);
 
         //5 - Second player : {x:2, weight:8}
-        UsersFonction.getNextUserToPlay(usersTest);
+        UsersFunction.getNextUserToPlay(usersTest);
         thirdUser = usersTest.find(user => user.turn == 1);
         piece = { "id": 5, "x": 2, "y": 0, "state": 0, "weight": thirdUser.weightPiece[1], "user": thirdUser.id };
         addPieceScript(boardGameTest, indexPieceTest, piece, thirdUser);
@@ -83,7 +83,7 @@ describe('---- Script some plays ----', function () {
         assert.equal(boardGameTest[3][2].id, 5);
 
         //6 - Third player : {x:3, weight:15}
-        UsersFonction.getNextUserToPlay(usersTest);
+        UsersFunction.getNextUserToPlay(usersTest);
         firstUser = usersTest.find(user => user.turn == 1);
         piece = { "id": 6, "x": 3, "y": 0, "state": 0, "weight": firstUser.weightPiece[1], "user": firstUser.id };
         addPieceScript(boardGameTest, indexPieceTest, piece, firstUser);
@@ -92,7 +92,7 @@ describe('---- Script some plays ----', function () {
         assert.equal(boardGameTest[3][3].id, 6);
 
         //7 - First player : {x:1, weight: 15}
-        UsersFonction.getNextUserToPlay(usersTest);
+        UsersFunction.getNextUserToPlay(usersTest);
         secondUser = usersTest.find(user => user.turn == 1);
         piece = { "id": 7, "x": 1, "y": 0, "state": 0, "weight": secondUser.weightPiece[2], "user": secondUser.id };
         addPieceScript(boardGameTest, indexPieceTest, piece, secondUser);
@@ -101,7 +101,7 @@ describe('---- Script some plays ----', function () {
         assert.equal(boardGameTest[3][1].id, 7);
 
         //8 - Second player : {x:3, weight:8}
-        UsersFonction.getNextUserToPlay(usersTest);
+        UsersFunction.getNextUserToPlay(usersTest);
         firstUser = usersTest.find(user => user.turn == 1);
         piece = { "id": 8, "x": 3, "y": 0, "state": 0, "weight": firstUser.weightPiece[1], "user": firstUser.id };
         addPieceScript(boardGameTest, indexPieceTest, piece, firstUser);
