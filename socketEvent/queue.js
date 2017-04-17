@@ -36,7 +36,6 @@ function pong(userId) {
     if(!this.users.has(userId))return;
     this.users.get(userId).setTime(new Date().getTime());
 }
-
 //generate uid
 function generateId(){
   return uuid.v4();

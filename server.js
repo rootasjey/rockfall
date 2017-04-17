@@ -6,8 +6,7 @@ const Queue = require("./socketEvent/queue");
 const Ready = require("./socketEvent/ready");
 const Play = require("./socketEvent/play");
 const User = require('./lib/model/user');
-//var io = require('socket.io')();
-const INTERVAL_CHECK_USER_PING = 5000;
+const INTERVAL_CHECK_USER_PING = 7000;
 
 const waitingList = {
     users: new Map(),
@@ -180,4 +179,4 @@ const deletOutOfDateUserInterval = setInterval(deletOutOfDateUser, 1000, waiting
 // pick randomly an user in waiting list to fill ready list
 let _pickAnUserInterval = setInterval(addToReadyList, 1000, waitingList.users, readyList.users, partyList.users, gameRule);
 
-setInterval(console.log, 10000, waitingList);
+setInterval(console.log, 5000, waitingList);
