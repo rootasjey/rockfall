@@ -108,7 +108,8 @@ function getUserInfo(users) {
 }
 //add from waiting list to ready list
 function switchWaitingToReady(waitingUsers, readyUsers) {
-    if (waitingUsers.length <= 0) {
+    console.log("waiting user size :",waitingUsers.size);
+    if (waitingUsers.size > 0) {
         let firstKey = Object.keys(waitingUsers)[0];
         readyUsers.set(firstKey, waitingUsers.get(firstKey));
         waitingUsers.delete(firstKey);
@@ -116,7 +117,8 @@ function switchWaitingToReady(waitingUsers, readyUsers) {
 }
 //add from waiting list to ready list
 function addToReadyList(waitingUsers, readyUsers, partyUsers, gameRule) {
-    if (readyUsers.length < gameRule.numberUsersToPlay) {
+    console.log("try to add ready list!");
+    if (readyUsers.size < gameRule.numberUsersToPlay) {
         switchWaitingToReady(waitingUsers, readyUsers);
         return;
     }
