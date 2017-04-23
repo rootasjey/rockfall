@@ -32,6 +32,10 @@
         console.log(user);
       });
 
+      socket.on('AreYouReady', function () {
+        console.log("AreYouReady");
+      });
+
       setInterval(pongServer, 3000);
     });
 

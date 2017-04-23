@@ -1,9 +1,9 @@
 /**
  * function to handle user to be ready for a party
  */
-const Ready = function (users, state) {
+const Ready = function (users, readyObject) {
     this.users = users;
-
+    this.readyObject = readyObject;
     // Expose handler methods for events
     this.handler = {
         "readyAccept": readyAccept.bind(this),
@@ -15,7 +15,7 @@ const Ready = function (users, state) {
 
 //Accept to play
 function readyAccept(userId) {
-    if(!state)return;
+    if(!this.readyObject.state)return;
     if(this.users.has(userId) && this.users.get(userId).getReady() == -1){
         this.users.get(userId).setReady(1);
     }
@@ -23,7 +23,7 @@ function readyAccept(userId) {
 
 //Refuse to play
 function readyRefuse(userId) {
-    if(!state)return;
+    if(!this.readyObject.state)return;
     if(this.users.has(userId) && this.users.get(userId).getReady() == -1){
         this.users.get(userId).setReady(0);
     }

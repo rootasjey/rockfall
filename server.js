@@ -8,17 +8,17 @@ const Play = require("./socketEvent/play");
 const User = require('./lib/model/user');
 const INTERVAL_CHECK_USER_PING = 7000;
 
-const waitingList = {
+let waitingList = {
     users: new Map(),
     state: true
 };
 
-const readyList = {
+let readyList = {
     users: new Map(),
     state: false
 };
 
-const partyList = {
+let partyList = {
     users: new Map(),
     state: false
 };
@@ -59,8 +59,8 @@ var io = require('socket.io')(server);
         io.sockets.on('connection', function (socket) {
             // Create event handlers for this socket
             var eventHandlers = {
-                queue: new Queue(waitingList.users, socket, gameRule.defaultUserParam)//,
-                //ready: new Ready(readyList.users, readyList.state),
+                queue: new Queue(waitingList.users, socket, gameRule.defaultUserParam),
+                ready: new Ready(readyList.users, readyList)
                 //play: new Play(gameRule, partyList.users, partyList.state)
             };
 
@@ -107,24 +107,30 @@ function getUserInfo(users) {
     return arrayInfo;
 }
 //add from waiting list to ready list
-function switchWaitingToReady(waitingUsers, readyUsers) {
-    console.log("waiting user size :",waitingUsers.size);
-    if (waitingUsers.size > 0) {
-        let firstKey = Object.keys(waitingUsers)[0];
-        readyUsers.set(firstKey, waitingUsers.get(firstKey));
-        waitingUsers.delete(firstKey);
+function switchWaitingToReady(waitingLocalList, readyLocalList) {
+    usersInWaitingList = waitingLocalList.users;
+    console.log("waiting user size :",usersInWaitingList.size);
+    if (usersInWaitingList.size > 0) {
+        let firstKey = [...usersInWaitingList.keys()][0];
+        readyLocalList.users.set(firstKey, usersInWaitingList.get(firstKey));
+        waitingLocalList.users.delete(firstKey);
     }
+    console.log("ready user size :",readyLocalList.users.size);
+    return;
 }
 //add from waiting list to ready list
-function addToReadyList(waitingUsers, readyUsers, partyUsers, gameRule) {
-    console.log("try to add ready list!");
-    if (readyUsers.size < gameRule.numberUsersToPlay) {
-        switchWaitingToReady(waitingUsers, readyUsers);
+function addToReadyList(waitingLocalList, readyLocalList, partyLocalList, gameRule) {
+    if(!waitingLocalList.state){
         return;
     }
-    clearInterval(_pickAnUserInterval);
-    initReadyRequest(readyUsers);
-    setTimeout(verifyReadyState, 15000, waitingUsers, readyUsers, partyUsers, gameRule);
+    if (readyLocalList.users.size < gameRule.numberUsersToPlay) {
+        switchWaitingToReady(waitingLocalList, readyLocalList);
+        return;
+    }
+    //clearInterval(_pickAnUserInterval);
+    waitingLocalList.state = false;
+    initReadyRequest(readyLocalList);
+    setTimeout(() => {verifyReadyState(waitingLocalList, readyLocalList, partyLocalList, gameRule);}, 15000);
     return;
 }
 
@@ -138,21 +144,31 @@ function cancelReadyState(waitingUsers, readyUsers) {
 }
 
 //verify if all user are ready
-function verifyReadyState(waitingUsers, readyUsers, partyUsers, gameRule) {
+function verifyReadyState(waitingLocalList, readyLocalList, partyLocalList, gameRule) {
     let allReady = true;
-    for (let [id, user] of readyUsers) {
-        if (user.getState() == 0 || user.getState() == -1) {
+    let usersInReadyList = readyLocalList.users;
+    for (let idUser of [...usersInReadyList.keys()]) {
+        let user = usersInReadyList.get(idUser);
+        if (!(user.getReady() > 0)) {
             allReady = false;
             break;
         }
     }
     if (!allReady) {
-        cancelReadyState(waitingUsers, readyUsers);
-        readyList.state = false;
-        _pickAnUserInterval = setInterval(addToReadyList, 1000, waitingUsers.users, readyUsers.users, gameRule);
+        //cancelReadyState(waitingUsers, readyUsers);
+        for (let idReady of [...usersInReadyList.keys()]) {
+            waitingLocalList.users.set(idReady, usersInReadyList.get(idReady));
+            readyLocalList.users.delete(idReady);
+        }
+        //readyList.users = new Map();
+        readyLocalList.state = false;
+        waitingLocalList.state = true;
+        //waitingList;
+        //readyList;
+        //_pickAnUserInterval = setInterval(addToReadyList, 1000, waitingUsers, readyUsers, partyUsers, gameRule);
         return;
     }
-    readyToParty(readyUsers, partyUsers);
+    //readyToParty(readyUsers, partyUsers);
 }
 
 //function to start when all condition matches
@@ -166,10 +182,10 @@ function readyToParty(readyUsers, partyUsers) {
 }
 
 //initialize ready request
-function initReadyRequest(users) {
-    users.forEach(user => user.setReady(-1));
-    users.forEach(user => user.getSocket().emit("AreYouReady"));
-    readyList.state = true;
+function initReadyRequest(readyLocalList) {
+    readyLocalList.users.forEach(user => user.setReady(-1));
+    readyLocalList.users.forEach(user => user.getSocket().emit("AreYouReady"));
+    readyLocalList.state = true;
     return;
 }
 //start interval
@@ -179,6 +195,8 @@ const deletOutOfDateUserInterval = setInterval(deletOutOfDateUser, 1000, waiting
 
 
 // pick randomly an user in waiting list to fill ready list
-let _pickAnUserInterval = setInterval(addToReadyList, 1000, waitingList.users, readyList.users, partyList.users, gameRule);
+let _pickAnUserInterval = setInterval(() => {addToReadyList(waitingList, readyList, partyList, gameRule);}, 1000);
 
-setInterval(console.log, 5000, waitingList);
+setInterval(console.log, 5000, "WAITING : ", waitingList.users.size, " & STATE : ", waitingList.state);
+setInterval(console.log, 5000, "READY : ", readyList.users.size, " & STATE : ", readyList.state);
+setInterval(console.log, 5000, "PARTY : ", partyList.users.size, " & STATE : ", partyList.state);
