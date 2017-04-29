@@ -18,6 +18,7 @@ app
 .use('/auth/twitter/', require('./routes/auth/twitter'))
 .use('/auth/microsoft/', require('./routes/auth/microsoft'))
 .use('/users/', require('./routes/users'))
+.use('/party', require('./routes/party'))
 
 if (require.main === module) {
   var server = http.createServer(app);

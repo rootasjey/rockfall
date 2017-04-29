@@ -107,7 +107,8 @@ export default class Auth extends Component {
   }
   
   close() {
-
+    console.log('close');
+    console.log(this.state.user.service);
   }
 
   render() {
