@@ -60,7 +60,9 @@
 
     function pongServer() {
       console.log("pong!");
-      socket.emit('pongUser', playerId);
+      socket.emit('pongReadyUser', playerId);
+      socket.emit('pongQueueUser', playerId);
+      socket.emit('pongPlayUser', playerId);
     }
 
     function skipTurn() {

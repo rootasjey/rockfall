@@ -7,7 +7,8 @@ const Ready = function (users, readyObject) {
     // Expose handler methods for events
     this.handler = {
         "readyAccept": readyAccept.bind(this),
-        "readyrefuse": readyRefuse.bind(this)
+        "readyrefuse": readyRefuse.bind(this),
+        "pongReadyUser": pongReady.bind(this)
     }
 }
 
@@ -21,18 +22,18 @@ function readyAccept(userId) {
     }
 }
 
+//ping host to verify connection
+function pongReady(userId) {
+    if(!this.users.has(userId))return;
+    this.users.get(userId).setTime(new Date().getTime());
+}
+
 //Refuse to play
 function readyRefuse(userId) {
     if(!this.readyObject.state)return;
     if(this.users.has(userId) && this.users.get(userId).getReady() == -1){
         this.users.get(userId).setReady(0);
     }
-}
-
-//Verify all player are ready
-function allReady(){
-    //return !this.users.some(state => state == 0 || state == -1); wrong
-    return;
 }
 
 module.exports = Ready;

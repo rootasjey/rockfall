@@ -11,7 +11,7 @@ const Queue = function (users, socket, defaultUserParam) {
     // Expose handler methods for events
     this.handler = {
         "joinWithoutOath": joinWithoutOath.bind(this), // use the bind function to access this.app
-        "pongUser": pong.bind(this)    // and this.socket in events
+        "pongQueueUser": pongQueue.bind(this)    // and this.socket in events
     }
 }
 
@@ -27,12 +27,12 @@ function joinWithoutOath(username) {
     anonymousUser.setSocket(this.socket);
     addUser(anonymousUser, this.users);
     anonymousUser.getSocket().emit('identifiant', userInfo);
-    pong.call(this, anonymousUser.getId());
+    pongQueue.call(this, anonymousUser.getId());
     anonymousUser.getSocket().broadcast.emit("add_waiting_list", {"user":userInfo});
 }
 
 //ping host to verify connection
-function pong(userId) {
+function pongQueue(userId) {
     if(!this.users.has(userId))return;
     this.users.get(userId).setTime(new Date().getTime());
 }

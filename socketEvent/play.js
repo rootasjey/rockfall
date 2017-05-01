@@ -16,7 +16,8 @@ const Play = function (gameRule, users, state) {
     // Expose handler methods for events
     this.handler = {
         "addPiece": addPiece.bind(this),
-        "skipTurn": skipTurn.bind(this)
+        "skipTurn": skipTurn.bind(this),
+        "pongPlayUser": pongPlay.bind(this)
     }
 }
 
@@ -28,6 +29,12 @@ function addPiece(userId, piece) {
     let newPiece = new Piece(piece.x, 0, userId, 0, piece.weight);
     addPieceScript(this.boardGame, this.indexPiece, newPiece, this.users.get(userId));
     this.indexPiece = applyRule(this.boardGame, this.indexPiece, this.users, this.gameRule);
+}
+
+//ping host to verify connection
+function pongPlay(userId) {
+    if(!this.users.has(userId))return;
+    this.users.get(userId).setTime(new Date().getTime());
 }
 
 //skip player turn

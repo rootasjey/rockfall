@@ -8,17 +8,17 @@ const Play = require("./socketEvent/play");
 const User = require('./lib/model/user');
 const INTERVAL_CHECK_USER_PING = 7000;
 
-let waitingList = {
+var waitingList = {
     users: new Map(),
     state: true
 };
 
-let readyList = {
+var readyList = {
     users: new Map(),
     state: false
 };
 
-let partyList = {
+var partyList = {
     users: new Map(),
     state: false
 };
@@ -77,7 +77,7 @@ var io = require('socket.io')(server);
     
 }
 
-//
+//delete out date user
 function deletOutOfDateUser(users, interval) {
     const TIMEOUT = new Date().getTime();
     let notification = false;
@@ -108,14 +108,11 @@ function getUserInfo(users) {
 }
 //add from waiting list to ready list
 function switchWaitingToReady(waitingLocalList, readyLocalList) {
-    usersInWaitingList = waitingLocalList.users;
-    console.log("waiting user size :",usersInWaitingList.size);
-    if (usersInWaitingList.size > 0) {
-        let firstKey = [...usersInWaitingList.keys()][0];
-        readyLocalList.users.set(firstKey, usersInWaitingList.get(firstKey));
+    if (waitingLocalList.users.size > 0 && waitingLocalList.state) {
+        let firstKey = [...waitingLocalList.users.keys()][0];
+        readyLocalList.users.set(firstKey,waitingLocalList.users.get(firstKey));
         waitingLocalList.users.delete(firstKey);
     }
-    console.log("ready user size :",readyLocalList.users.size);
     return;
 }
 //add from waiting list to ready list
@@ -127,57 +124,31 @@ function addToReadyList(waitingLocalList, readyLocalList, partyLocalList, gameRu
         switchWaitingToReady(waitingLocalList, readyLocalList);
         return;
     }
-    //clearInterval(_pickAnUserInterval);
     waitingLocalList.state = false;
     initReadyRequest(readyLocalList);
-    setTimeout(() => {verifyReadyState(waitingLocalList, readyLocalList, partyLocalList, gameRule);}, 15000);
-    return;
-}
-
-//a player cancel a ready request purge ready list
-function cancelReadyState(waitingUsers, readyUsers) {
-    readyUsers.forEach(function (value, key, users) {
-        waitingUsers.set(key, value);
-        readyUsers.delete(key);
-    });
+    setTimeout(() => {verifyReadyState(waitingLocalList, readyLocalList);},15000);
+    
     return;
 }
 
 //verify if all user are ready
-function verifyReadyState(waitingLocalList, readyLocalList, partyLocalList, gameRule) {
+function verifyReadyState(waitingLocalList, readyLocalList) {
     let allReady = true;
-    let usersInReadyList = readyLocalList.users;
-    for (let idUser of [...usersInReadyList.keys()]) {
-        let user = usersInReadyList.get(idUser);
+    for (let idUser of [...readyLocalList.users.keys()]) {
+        let user = readyLocalList.users.get(idUser);
         if (!(user.getReady() > 0)) {
             allReady = false;
             break;
         }
     }
-    if (!allReady) {
-        //cancelReadyState(waitingUsers, readyUsers);
-        for (let idReady of [...usersInReadyList.keys()]) {
-            waitingLocalList.users.set(idReady, usersInReadyList.get(idReady));
-            readyLocalList.users.delete(idReady);
+    if (!allReady && readyLocalList.state) {
+        for (let idReady of [...readyLocalList.users.keys()]) {
+            waitingLocalList.users.set(idReady, readyLocalList.users.get(idReady));
         }
-        //readyList.users = new Map();
+        readyLocalList.users.clear();
         readyLocalList.state = false;
         waitingLocalList.state = true;
-        //waitingList;
-        //readyList;
-        //_pickAnUserInterval = setInterval(addToReadyList, 1000, waitingUsers, readyUsers, partyUsers, gameRule);
-        return;
     }
-    //readyToParty(readyUsers, partyUsers);
-}
-
-//function to start when all condition matches
-function readyToParty(readyUsers, partyUsers) {
-    readyUsers.forEach(function (user, key, users) {
-        partyUsers.set(key, user);
-        readyUsers.delete(key);
-    });
-    partyList.state = true;
     return;
 }
 
@@ -188,15 +159,8 @@ function initReadyRequest(readyLocalList) {
     readyLocalList.state = true;
     return;
 }
-//start interval
-
 //set interval to delete out date user in waiting list
 const deletOutOfDateUserInterval = setInterval(deletOutOfDateUser, 1000, waitingList.users, INTERVAL_CHECK_USER_PING);
 
-
 // pick randomly an user in waiting list to fill ready list
-let _pickAnUserInterval = setInterval(() => {addToReadyList(waitingList, readyList, partyList, gameRule);}, 1000);
-
-setInterval(console.log, 5000, "WAITING : ", waitingList.users.size, " & STATE : ", waitingList.state);
-setInterval(console.log, 5000, "READY : ", readyList.users.size, " & STATE : ", readyList.state);
-setInterval(console.log, 5000, "PARTY : ", partyList.users.size, " & STATE : ", partyList.state);
+var _pickAnUserInterval = setInterval(()=>{addToReadyList(waitingList, readyList, partyList, gameRule);}, 5000);
