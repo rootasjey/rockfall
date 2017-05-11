@@ -6,7 +6,10 @@ const Queue = require("./socketEvent/queue");
 const Ready = require("./socketEvent/ready");
 const Play = require("./socketEvent/play");
 const User = require('./lib/model/user');
+const UsersFunction = require("./lib/UsersFunction");
 const INTERVAL_CHECK_USER_PING = 7000;
+const TIME_TO_WAIT_BEFORE_READY_CHECK = 15000;
+const TIME_TO_PLAY = 30000;
 
 var waitingList = {
     users: new Map(),
@@ -19,14 +22,15 @@ var readyList = {
 };
 
 var partyList = {
-    users: new Map(),
+    users: new Array(),
     state: false
 };
 
 const gameRule = {
     //number of align piece to win
-    "nbForWinLine": 4,
+    "nbAlignPieceToWin": 4,
     "numberUsersToPlay": 3,
+    "nbToScoreToWin":3,
     "defaultUserParam": {
         "pieceAction": 1,
         "pieceActionPerTurn": 1,
@@ -53,15 +57,15 @@ app
 
 if (require.main === module) {
     var server = http.createServer(app);
-var io = require('socket.io')(server);
+    var io = require('socket.io')(server);
     server.listen(process.env.PORT || 8080, () => {
         console.log('Listening on %j', server.address());
         io.sockets.on('connection', function (socket) {
             // Create event handlers for this socket
             var eventHandlers = {
                 queue: new Queue(waitingList.users, socket, gameRule.defaultUserParam),
-                ready: new Ready(readyList.users, readyList)
-                //play: new Play(gameRule, partyList.users, partyList.state)
+                ready: new Ready(readyList.users, readyList),
+                play: new Play(gameRule, partyList.users, partyList.state)
             };
 
             // Bind events to handlers
@@ -126,13 +130,13 @@ function addToReadyList(waitingLocalList, readyLocalList, partyLocalList, gameRu
     }
     waitingLocalList.state = false;
     initReadyRequest(readyLocalList);
-    setTimeout(() => {verifyReadyState(waitingLocalList, readyLocalList);},15000);
+    setTimeout(() => {verifyReadyState(waitingLocalList, readyLocalList, partyLocalList);}, TIME_TO_WAIT_BEFORE_READY_CHECK);
     
     return;
 }
 
 //verify if all user are ready
-function verifyReadyState(waitingLocalList, readyLocalList) {
+function verifyReadyState(waitingLocalList, readyLocalList, partyLocalList) {
     let allReady = true;
     for (let idUser of [...readyLocalList.users.keys()]) {
         let user = readyLocalList.users.get(idUser);
@@ -149,6 +153,18 @@ function verifyReadyState(waitingLocalList, readyLocalList) {
         readyLocalList.state = false;
         waitingLocalList.state = true;
     }
+
+    if (allReady && readyLocalList.state) {
+        for (let idReady of [...readyLocalList.users.keys()]) {
+            partyLocalList.users.set(idReady, readyLocalList.users.get(idReady));
+        }
+        readyLocalList.users.clear();
+        readyLocalList.state = false;
+        partyLocalList.state = true;
+
+        initializeUsers(partyLocalList.users);
+         _playUserInterval = setInterval(()=>{getNextUserToPlay(partyLocalList, waitingLocalList, gameRule);}, TIME_TO_PLAY);
+    }
     return;
 }
 
@@ -159,8 +175,33 @@ function initReadyRequest(readyLocalList) {
     readyLocalList.state = true;
     return;
 }
+//initialize user play
+function initializeUsers(users){
+    UsersFunction.pickOrderToPlay(users);
+    UsersFunction.getNextUserToPlay(users);
+}
+
+//pass a turn and verify if a game is win
+function getNextUserToPlay(partyLocalList, waitingLocalList, localGameRule){
+    let users = partyLocalList.users;
+    let winners = [];
+    users.forEach((user) =>{if(user.score >= gameRule.nbToScoreToWin){winners.push(user);}});
+    
+    if(winners.length > 0){
+        users.forEach(user => user.getSocket().emit("winner",{"winners":winners}));
+        partyLocalList.users.clear();
+        partyLocalList.state = false;
+        waitingLocalList.state = true;
+        return;
+    }
+    UsersFunction.getNextUserToPlay(users);
+}
+
 //set interval to delete out date user in waiting list
 const deletOutOfDateUserInterval = setInterval(deletOutOfDateUser, 1000, waitingList.users, INTERVAL_CHECK_USER_PING);
 
 // pick randomly an user in waiting list to fill ready list
 var _pickAnUserInterval = setInterval(()=>{addToReadyList(waitingList, readyList, partyList, gameRule);}, 5000);
+
+// initiate user play
+var _playUserInterval = null;

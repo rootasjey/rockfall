@@ -8,41 +8,74 @@ describe('---- user functions ----', function () {
 
     it('order users', function () {
 
-        assert.equal(0, plate.Users.filter(user => user.order != 0).length);
+        let usersSample = [];
+        plate.Users.forEach((user)=>{if(user.order != 0){usersSample.push(user)}});
+        assert.equal(0, usersSample.length);
+        usersSample = [];
         UsersFunction.pickOrderToPlay(plate.Users);
-        assert.equal(3, plate.Users.filter(user => user.order != 0).length);
-
-        assert.equal(1, plate.Users.filter(user => user.order == 1).length);
-        assert.equal(1, plate.Users.filter(user => user.order == 2).length);
-        assert.equal(1, plate.Users.filter(user => user.order == 3).length);
+        plate.Users.forEach((user)=>{if(user.order != 0){usersSample.push(user)}});
+        assert.equal(3, usersSample.length);
+        usersSample = [];
+        plate.Users.forEach((user)=>{if(user.order == 1){usersSample.push(user)}});
+        assert.equal(1, usersSample.length);
+        usersSample = [];
+        plate.Users.forEach((user)=>{if(user.order == 2){usersSample.push(user)}});
+        assert.equal(1, usersSample.length);
+        usersSample = [];
+        plate.Users.forEach((user)=>{if(user.order == 3){usersSample.push(user)}});
+        assert.equal(1, usersSample.length);
+        usersSample = [];
 
     });
 
     it('change users turn', function () {
 
-        assert.equal(0, plate.Users.filter(user => user.turn != 0).length);
-        UsersFunction.getNextUserToPlay(plate.Users);
-        assert.equal(1, plate.Users.filter(user => user.turn != 0).length);
-        assert.equal(2, plate.Users.filter(user => user.turn == 0).length);
-
-        assert.equal(1, plate.Users.filter(user => user.turn != 0)[0].order);
-        UsersFunction.getNextUserToPlay(plate.Users);
-        assert.equal(2, plate.Users.filter(user => user.turn != 0)[0].order);
-        assert.equal(1, plate.Users.filter(user => user.turn != 0).length);
-        assert.equal(2, plate.Users.filter(user => user.turn == 0).length);
-
+        let usersSample = [];
+        plate.Users.forEach((user)=>{if(user.turn != 0){usersSample.push(user)}});
+        assert.equal(0, usersSample.length);
+        usersSample = [];
         UsersFunction.getNextUserToPlay(plate.Users);
 
-        assert.equal(3, plate.Users.filter(user => user.turn != 0)[0].order);
-        assert.equal(1, plate.Users.filter(user => user.turn != 0).length);
-        assert.equal(2, plate.Users.filter(user => user.turn == 0).length);
+        plate.Users.forEach((user)=>{if(user.turn != 0){usersSample.push(user)}});
+        assert.equal(1, usersSample.length);
+        usersSample = [];
+        plate.Users.forEach((user)=>{if(user.turn == 0){usersSample.push(user)}});
+        assert.equal(2, usersSample.length);
+        usersSample = [];
+
+        plate.Users.forEach((user)=>{if(user.turn != 0){usersSample.push(user)}});
+        assert.equal(1, usersSample.length);
+        assert.equal(1, usersSample[0].order);
+        usersSample = [];
+        
+        UsersFunction.getNextUserToPlay(plate.Users);
+        
+        plate.Users.forEach((user)=>{if(user.turn != 0){usersSample.push(user)}});
+        assert.equal(1, usersSample.length);
+        assert.equal(2, usersSample[0].order);
+        usersSample = [];
+        plate.Users.forEach((user)=>{if(user.turn == 0){usersSample.push(user)}});
+        assert.equal(2, usersSample.length);
+        usersSample = [];
 
         UsersFunction.getNextUserToPlay(plate.Users);
 
-        assert.equal(1, plate.Users.filter(user => user.turn != 0)[0].order);
-        assert.equal(1, plate.Users.filter(user => user.turn != 0).length);
-        assert.equal(2, plate.Users.filter(user => user.turn == 0).length);
+        plate.Users.forEach((user)=>{if(user.turn != 0){usersSample.push(user)}});
+        assert.equal(1, usersSample.length);
+        assert.equal(3, usersSample[0].order);
+        usersSample = [];
+        plate.Users.forEach((user)=>{if(user.turn == 0){usersSample.push(user)}});
+        assert.equal(2, usersSample.length);
+        usersSample = [];
 
+        UsersFunction.getNextUserToPlay(plate.Users);
+
+        plate.Users.forEach((user)=>{if(user.turn != 0){usersSample.push(user)}});
+        assert.equal(1, usersSample.length);
+        assert.equal(1, usersSample[0].order);
+        usersSample = [];
+        plate.Users.forEach((user)=>{if(user.turn == 0){usersSample.push(user)}});
+        assert.equal(2, usersSample.length);
     });
 
 });

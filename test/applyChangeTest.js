@@ -16,10 +16,9 @@ describe('---- Check change ----', function() {
             "state": 1,
             "weight": 4
         };
-        let users = [
-          { "id": 1, "name": "1", "order": 1, "turn": 0, "score": 0, "point": 0, "pieceAction": 0, "pieceActionPerTurn": 1, "weightPiece": [5, 10, 15] },
-          { "id": 2, "name": "2", "order": 1, "turn": 0, "score": 0, "point": 0, "pieceAction": 0, "pieceActionPerTurn": 1, "weightPiece": [5, 10, 15] }
-        ];
+        let users = new Map();
+        users.set("1", { "id": 1, "name": "1", "order": 1, "turn": 0, "score": 0, "point": 0, "pieceAction": 0, "pieceActionPerTurn": 1, "weightPiece": [5, 10, 15] });
+        users.set("2", { "id": 2, "name": "2", "order": 1, "turn": 0, "score": 0, "point": 0, "pieceAction": 0, "pieceActionPerTurn": 1, "weightPiece": [5, 10, 15] });
         let plateClone = JSON.parse(JSON.stringify(plate.Plate));
         assert.equal(plateClone[3][4].state, 1);
         applyChange(plateClone, [pieceToPlay], users);
@@ -37,17 +36,15 @@ describe('---- Check change ----', function() {
             "state": 2,
             "weight": 4
         };
-
-        let users = [
-          { "id": 1, "name": "1", "order": 1, "turn": 0, "score": 0, "point": 0, "pieceAction": 0, "pieceActionPerTurn": 1, "weightPiece": [5, 10, 15] },
-          { "id": 2, "name": "2", "order": 1, "turn": 0, "score": 0, "point": 0, "pieceAction": 0, "pieceActionPerTurn": 1, "weightPiece": [5, 10, 15] }
-        ];
+        let users = new Map();
+        users.set(1,{ "id": 1, "name": "1", "order": 1, "turn": 0, "score": 0, "point": 0, "pieceAction": 0, "pieceActionPerTurn": 1, "weightPiece": [5, 10, 15] });
+        users.set(2,{ "id": 2, "name": "2", "order": 1, "turn": 0, "score": 0, "point": 0, "pieceAction": 0, "pieceActionPerTurn": 1, "weightPiece": [5, 10, 15] });
         let plateClone = JSON.parse(JSON.stringify(plate.Plate));
         plateClone[4][3] = pieceToPlay;
         applyChange(plateClone, [pieceToPlay], users);
 
         assert.equal(plateClone[4][3].state, 4);
-        assert.equal(users[1].point, 4);
+        assert.equal(users.get(2).point, 4);
 
     });
 
@@ -60,17 +57,16 @@ describe('---- Check change ----', function() {
             "state": 3,
             "weight": 4
         };
-
-        let users = [
-          { "id": 1, "name": "1", "order": 1, "turn": 0, "score": 0, "point": 0, "pieceAction": 0, "pieceActionPerTurn": 1, "weightPiece": [5, 10, 15] },
-          { "id": 2, "name": "2", "order": 1, "turn": 0, "score": 0, "point": 0, "pieceAction": 0, "pieceActionPerTurn": 1, "weightPiece": [5, 10, 15] }
-        ];
+        
+        let users = new Map();
+        users.set(1,{ "id": 1, "name": "1", "order": 1, "turn": 0, "score": 0, "point": 0, "pieceAction": 0, "pieceActionPerTurn": 1, "weightPiece": [5, 10, 15] });
+        users.set(2,{ "id": 2, "name": "2", "order": 1, "turn": 0, "score": 0, "point": 0, "pieceAction": 0, "pieceActionPerTurn": 1, "weightPiece": [5, 10, 15] });
         let plateClone = JSON.parse(JSON.stringify(plate.Plate));
         plateClone[4][3] = pieceToPlay;
         applyChange(plateClone, [pieceToPlay], users);
 
         assert.equal(plateClone[4][3].state, 4);
-        assert.equal(users[1].point, 4);
+        assert.equal(users.get(2).point, 4);
 
     });
 
@@ -83,12 +79,10 @@ describe('---- Check change ----', function() {
             "state": 4,
             "weight": 4
         };
-
-        let users = [
-          { "id": 1, "name": "1", "order": 1, "turn": 0, "score": 0, "point": 0, "pieceAction": 0, "pieceActionPerTurn": 1, "weightPiece": [5, 10, 15] },
-          { "id": 2, "name": "2", "order": 1, "turn": 0, "score": 0, "point": 0, "pieceAction": 0, "pieceActionPerTurn": 1, "weightPiece": [5, 10, 15] }
-        ];
-
+        
+        let users= new Map();
+        users.set(1,{ "id": 1, "name": "1", "order": 1, "turn": 0, "score": 0, "point": 0, "pieceAction": 0, "pieceActionPerTurn": 1, "weightPiece": [5, 10, 15] });
+        users.set(2,{ "id": 2, "name": "2", "order": 1, "turn": 0, "score": 0, "point": 0, "pieceAction": 0, "pieceActionPerTurn": 1, "weightPiece": [5, 10, 15] });
         let plateClone = JSON.parse(JSON.stringify(plate.Plate));
         let indexPiece = [pieceToPlay , {"id":17, "x": 2, "y": 4, "user": 2, "state": 0,"weight": 4}];
         plateClone[4][3] = pieceToPlay;

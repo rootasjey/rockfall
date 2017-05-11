@@ -3,6 +3,7 @@ const addPieceScript = require("../lib/addPieceScript");
 const Board = require("../lib/model/board");
 const UsersFunction = require("../lib/UsersFunction");
 const applyRule = require("../lib/ApplyRule");
+
 /**
  * function to handle action to play
  */
@@ -45,9 +46,9 @@ function skipTurn(userId) {
 }
 
 //initialise user array
-function initializeUsers(users){
+/*function initializeUsers(users){
     UsersFunction.pickOrderToPlay(users);
     UsersFunction.getNextUserToPlay(users);
-}
+}*/
 
 module.exports = Play;
