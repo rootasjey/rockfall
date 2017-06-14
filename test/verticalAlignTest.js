@@ -12,14 +12,14 @@ describe('---- Check vertical align ----', function () {
                 "id": 1,
                 "x": 0,
                 "y": 1,
-                "user": 1,
+                "userId": 1,
                 "weight": 5,
                 "state": 0
             };
         let result = checkVertical(plate.Plate, pieceToWin, pieceToPlay);
 
         assert.equal(result.win, true);
-        assert.equal(result.user, pieceToPlay.user);
+        assert.equal(result.user, pieceToPlay.userId);
         assert.equal(result.count, 5);
 
         let winPiece = result.winPiece;
@@ -35,13 +35,13 @@ describe('---- Check vertical align ----', function () {
                 "id": 1,
                 "x": 1,
                 "y": 3,
-                "user": 2,
+                "userId": 2,
                 "weight": 5,
                 "state": 0
             };
         let result = checkVertical(plate.Plate, pieceToWin, pieceToPlay);
         assert.equal(result.win, false);
-        assert.equal(result.user, pieceToPlay.user);
+        assert.equal(result.user, pieceToPlay.userId);
         assert.equal(result.count, 3);
     });
 });

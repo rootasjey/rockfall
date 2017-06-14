@@ -40,7 +40,7 @@ describe('---- Script some plays ----', function () {
         UsersFunction.getNextUserToPlay(usersTest);
         let firstUser = null;
         usersTest.forEach((user) => {if(user.turn == 1){firstUser = user};});
-        let piece = { "id": 1, "x": 0, "y": 0, "state": 0, "weight": firstUser.weightPiece[0], "user": firstUser.id };
+        let piece = { "id": 1, "x": 0, "y": 0, "state": 0, "weight": firstUser.weightPiece[0], "userId": firstUser.id };
         addPieceScript(boardGameTest, indexPieceTest, piece, firstUser);
         indexPieceTest = applyRule(boardGameTest, indexPieceTest, usersTest, gameRules);
         
@@ -51,7 +51,7 @@ describe('---- Script some plays ----', function () {
         let secondUser = null;
         usersTest.forEach((user) => {if(user.turn == 1){secondUser = user};});
 
-        piece = { "id": 2, "x": 1, "y": 0, "state": 0, "weight": secondUser.weightPiece[2], "user": secondUser.id };
+        piece = { "id": 2, "x": 1, "y": 0, "state": 0, "weight": secondUser.weightPiece[2], "userId": secondUser.id };
         addPieceScript(boardGameTest, indexPieceTest, piece, secondUser);
         indexPieceTest = applyRule(boardGameTest, indexPieceTest, usersTest, gameRules);
         
@@ -61,7 +61,7 @@ describe('---- Script some plays ----', function () {
         UsersFunction.getNextUserToPlay(usersTest);
         let thirdUser = null;
         usersTest.forEach((user) => {if(user.turn == 1){thirdUser = user};});
-        piece = { "id": 3, "x": 2, "y": 0, "state": 0, "weight": thirdUser.weightPiece[2], "user": thirdUser.id };
+        piece = { "id": 3, "x": 2, "y": 0, "state": 0, "weight": thirdUser.weightPiece[2], "userId": thirdUser.id };
         addPieceScript(boardGameTest, indexPieceTest, piece, thirdUser);
         indexPieceTest = applyRule(boardGameTest, indexPieceTest, usersTest, gameRules);
         
@@ -70,7 +70,7 @@ describe('---- Script some plays ----', function () {
         //4 - First player : {x:3, weigth:15}
         UsersFunction.getNextUserToPlay(usersTest);
         usersTest.forEach((user) => {if(user.turn == 1){firstUser = user};});
-        piece = { "id": 4, "x": 3, "y": 0, "state": 0, "weight": firstUser.weightPiece[2], "user": firstUser.id };
+        piece = { "id": 4, "x": 3, "y": 0, "state": 0, "weight": firstUser.weightPiece[2], "userId": firstUser.id };
         addPieceScript(boardGameTest, indexPieceTest, piece, firstUser);
         indexPieceTest = applyRule(boardGameTest, indexPieceTest, usersTest, gameRules);
 
@@ -79,7 +79,7 @@ describe('---- Script some plays ----', function () {
         //5 - Second player : {x:2, weight:8}
         UsersFunction.getNextUserToPlay(usersTest);
         usersTest.forEach((user) => {if(user.turn == 1){secondUser = user};});
-        piece = { "id": 5, "x": 2, "y": 0, "state": 0, "weight": secondUser.weightPiece[1], "user": secondUser.id };
+        piece = { "id": 5, "x": 2, "y": 0, "state": 0, "weight": secondUser.weightPiece[1], "userId": secondUser.id };
         addPieceScript(boardGameTest, indexPieceTest, piece, secondUser);
         indexPieceTest = applyRule(boardGameTest, indexPieceTest, usersTest, gameRules);
         
@@ -88,7 +88,7 @@ describe('---- Script some plays ----', function () {
         //6 - Third player : {x:3, weight:15}
         UsersFunction.getNextUserToPlay(usersTest);
         usersTest.forEach((user) => {if(user.turn == 1){thirdUser = user};});
-        piece = { "id": 6, "x": 3, "y": 0, "state": 0, "weight": thirdUser.weightPiece[1], "user": thirdUser.id };
+        piece = { "id": 6, "x": 3, "y": 0, "state": 0, "weight": thirdUser.weightPiece[1], "userId": thirdUser.id };
         addPieceScript(boardGameTest, indexPieceTest, piece, thirdUser);
         indexPieceTest = applyRule(boardGameTest, indexPieceTest, usersTest, gameRules);
 
@@ -97,7 +97,7 @@ describe('---- Script some plays ----', function () {
         //7 - First player : {x:1, weight: 15}
         UsersFunction.getNextUserToPlay(usersTest);
         usersTest.forEach((user) => {if(user.turn == 1){firstUser = user};});
-        piece = { "id": 7, "x": 1, "y": 0, "state": 0, "weight": firstUser.weightPiece[2], "user": firstUser.id };
+        piece = { "id": 7, "x": 1, "y": 0, "state": 0, "weight": firstUser.weightPiece[2], "userId": firstUser.id };
         addPieceScript(boardGameTest, indexPieceTest, piece, firstUser);
         indexPieceTest = applyRule(boardGameTest, indexPieceTest, usersTest, gameRules);
 
@@ -106,7 +106,7 @@ describe('---- Script some plays ----', function () {
         //8 - Second player : {x:3, weight:8}
         UsersFunction.getNextUserToPlay(usersTest);
         usersTest.forEach((user) => {if(user.turn == 1){secondUser = user};});
-        piece = { "id": 8, "x": 3, "y": 0, "state": 0, "weight": secondUser.weightPiece[1], "user": secondUser.id };
+        piece = { "id": 8, "x": 3, "y": 0, "state": 0, "weight": secondUser.weightPiece[1], "userId": secondUser.id };
         addPieceScript(boardGameTest, indexPieceTest, piece, secondUser);
         indexPieceTest = applyRule(boardGameTest, indexPieceTest, usersTest, gameRules);
     

@@ -12,7 +12,7 @@ describe('---- Check weight ----', function () {
             "id": 13,
             "x": 1,
             "y": 4,
-            "user": 2,
+            "userId": 2,
             "state": 0,
             "weight": 4
         };
@@ -29,7 +29,7 @@ describe('---- Check weight ----', function () {
             "id": 16,
             "x": 3,
             "y": 4,
-            "user": 2,
+            "userId": 2,
             "state": 0,
             "weight": 4
         };

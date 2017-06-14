@@ -3,16 +3,18 @@ const addPieceScript = require("../lib/addPieceScript");
 const Board = require("../lib/model/board");
 const UsersFunction = require("../lib/UsersFunction");
 const applyRule = require("../lib/ApplyRule");
+const Piece = require('../lib/model/piece');
+
 
 /**
  * function to handle action to play
  */
-const Play = function (gameRule, users, state) {
+const Play = function (gameRule, users, partyListObject, boardGame) {
     
     this.gameRule = gameRule;
-    this.boardGame =  Board.getBoardGame(gameRule.xSize, gameRule.ySize);
+    this.boardGame =  boardGame;//Board.getBoardGame(gameRule.xSize, gameRule.ySize);
     this.users = users;
-    this.state = state;
+    this.partyListObject = partyListObject;
     this.indexPiece = [];
     // Expose handler methods for events
     this.handler = {
@@ -26,10 +28,14 @@ const Play = function (gameRule, users, state) {
 
 //addPiece to board
 function addPiece(userId, piece) {
-    if(!this.state) return;
-    let newPiece = new Piece(piece.x, 0, userId, 0, piece.weight);
+    console.log(this.boardGame);
+    console.log(piece);
+    if(!this.partyListObject.state || !this.users.has(userId)) return;
+    let newPiece = new Piece(+piece.x, 0, userId, 0, +piece.weight);
     addPieceScript(this.boardGame, this.indexPiece, newPiece, this.users.get(userId));
+    console.log("JUST AFTER");
     this.indexPiece = applyRule(this.boardGame, this.indexPiece, this.users, this.gameRule);
+    console.log("END");
 }
 
 //ping host to verify connection
@@ -40,15 +46,9 @@ function pongPlay(userId) {
 
 //skip player turn
 function skipTurn(userId) {
-    if(!this.state) return;
+    if(!this.partyListObject.state) return;
     if(!this.users.get(userId).turn) return; 
     UsersFunction.getNextUserToPlay(this.users, this.gameRule);
 }
-
-//initialise user array
-/*function initializeUsers(users){
-    UsersFunction.pickOrderToPlay(users);
-    UsersFunction.getNextUserToPlay(users);
-}*/
 
 module.exports = Play;

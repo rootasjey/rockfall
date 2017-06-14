@@ -6,10 +6,25 @@ const Queue = require("./socketEvent/queue");
 const Ready = require("./socketEvent/ready");
 const Play = require("./socketEvent/play");
 const User = require('./lib/model/user');
+const Board = require("./lib/model/board");
 const UsersFunction = require("./lib/UsersFunction");
 const INTERVAL_CHECK_USER_PING = 7000;
 const TIME_TO_WAIT_BEFORE_READY_CHECK = 15000;
 const TIME_TO_PLAY = 30000;
+
+const gameRule = {
+    //number of align piece to win
+    "nbAlignPieceToWin": 1,
+    "numberUsersToPlay": 2,
+    "nbToScoreToWin":3,
+    "defaultUserParam": {
+        "pieceAction": 1,
+        "pieceActionPerTurn": 1,
+        "weightPiece": [5, 10, 15]
+    },
+    "xSize": 4,
+    "ySize": 4
+};
 
 var waitingList = {
     users: new Map(),
@@ -22,20 +37,9 @@ var readyList = {
 };
 
 var partyList = {
-    users: new Array(),
+    users: new Map(),
+    boardGame: Board.getBoardGame(gameRule.xSize, gameRule.ySize),
     state: false
-};
-
-const gameRule = {
-    //number of align piece to win
-    "nbAlignPieceToWin": 4,
-    "numberUsersToPlay": 3,
-    "nbToScoreToWin":3,
-    "defaultUserParam": {
-        "pieceAction": 1,
-        "pieceActionPerTurn": 1,
-        "weightPiece": [5, 10, 15]
-    }
 };
 
 
@@ -65,7 +69,7 @@ if (require.main === module) {
             var eventHandlers = {
                 queue: new Queue(waitingList.users, socket, gameRule.defaultUserParam),
                 ready: new Ready(readyList.users, readyList),
-                play: new Play(gameRule, partyList.users, partyList.state)
+                play: new Play(gameRule, partyList.users, partyList, partyList.boardGame)
             };
 
             // Bind events to handlers
@@ -130,6 +134,7 @@ function addToReadyList(waitingLocalList, readyLocalList, partyLocalList, gameRu
     }
     waitingLocalList.state = false;
     initReadyRequest(readyLocalList);
+    console.log("are you ready?!  ");
     setTimeout(() => {verifyReadyState(waitingLocalList, readyLocalList, partyLocalList);}, TIME_TO_WAIT_BEFORE_READY_CHECK);
     
     return;
@@ -155,6 +160,7 @@ function verifyReadyState(waitingLocalList, readyLocalList, partyLocalList) {
     }
 
     if (allReady && readyLocalList.state) {
+        console.log("let's go");
         for (let idReady of [...readyLocalList.users.keys()]) {
             partyLocalList.users.set(idReady, readyLocalList.users.get(idReady));
         }
@@ -183,6 +189,7 @@ function initializeUsers(users){
 
 //pass a turn and verify if a game is win
 function getNextUserToPlay(partyLocalList, waitingLocalList, localGameRule){
+    console.log("next user ");
     let users = partyLocalList.users;
     let winners = [];
     users.forEach((user) =>{if(user.score >= gameRule.nbToScoreToWin){winners.push(user);}});
@@ -205,3 +212,6 @@ var _pickAnUserInterval = setInterval(()=>{addToReadyList(waitingList, readyList
 
 // initiate user play
 var _playUserInterval = null;
+
+setInterval(()=>{console.log("boardGame: ");console.log(partyList.boardGame);},10000);
+//setInterval(()=>{console.log("users: ");console.log(partyList.users);},5000);

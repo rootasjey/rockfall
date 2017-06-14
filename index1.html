@@ -9,7 +9,7 @@
 
 <body style="width: 100%; height: 100%;">
   <button onclick="joinGame();">Join No Connect</button>
-  <input type=number id="yPiece" />
+  <input type=number id="xPiece" />
   <input type=number id="pieceWeight" />
   <button onclick="addPiece();">Add Piece</button>
   <button onclick="skipTurn();">Skip Turn</button>
@@ -39,12 +39,12 @@
       setInterval(pongServer, 3000);
     });
 
-    function addPiece(posY, weight) {
-      let posY = document.getElementById("yPiece").value();
-      let weight = document.getElementById("pieceWeight").value();
+    function addPiece() {
+      let posX = document.getElementById("xPiece").value;
+      let weight = document.getElementById("pieceWeight").value;
       let piece = {
-        "x": 0,
-        "y": posY,
+        "x": posX,
+        "y": 0,
         "state": 0,
         "weight": weight,
         "user": playerId

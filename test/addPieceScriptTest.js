@@ -13,7 +13,7 @@ describe('---- add piece to party ----', function () {
                 "id": 1,
                 "x": 1,
                 "y": 0,
-                "user": 1,
+                "userId": 1,
                 "weight": 5,
                 "state": 0
             };
@@ -45,7 +45,7 @@ describe('---- add piece to party ----', function () {
                 "id": 1,
                 "x": 1,
                 "y": 0,
-                "user": 2,
+                "userId": 2,
                 "weight": 2,
                 "state": 0
             };
@@ -73,7 +73,7 @@ describe('---- add piece to party ----', function () {
                 "id": 1,
                 "x": 0,
                 "y": 0,
-                "user": 1,
+                "userId": 1,
                 "weight": 5,
                 "state": 0
             };
@@ -84,7 +84,7 @@ describe('---- add piece to party ----', function () {
                 "id": 1,
                 "x": 0,
                 "y": 0,
-                "user": 1,
+                "userId": 1,
                 "state": 0,
                 "weight": 4
             }, 0, 0, 0, 0, 0],
@@ -110,7 +110,7 @@ describe('---- add piece to party ----', function () {
                 "id": 1,
                 "x": 1,
                 "y": 0,
-                "user": 3,
+                "userId": 3,
                 "weight": 5,
                 "state": 0
             };
@@ -139,7 +139,7 @@ describe('---- add piece to party ----', function () {
                 "id": 1,
                 "x": 1,
                 "y": 0,
-                "user": 1,
+                "userId": 1,
                 "weight": 6,
                 "state": 0
             };
