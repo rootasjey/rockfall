@@ -12,13 +12,13 @@ describe('---- Check horizontal align ----', function () {
                 "id": 1,
                 "x": 1,
                 "y": 1,
-                "user": 1,
+                "userId": 1,
                 "weight": 5,
                 "state": 0
             };
         let result = checkHorizontal(plate.Plate, pieceToWin, pieceToPlay);
         assert.equal(result.win, true);
-        assert.equal(result.user, pieceToPlay.user);
+        assert.equal(result.user, pieceToPlay.userId);
         assert.equal(result.count, 4);
         let winPiece = result.winPiece;
         for (let i = 0, length = winPiece.length; i < length; i++) {
@@ -33,13 +33,13 @@ describe('---- Check horizontal align ----', function () {
                 "id": 1,
                 "x": 1,
                 "y": 4,
-                "user": 2,
+                "userId": 2,
                 "weight": 5,
                 "state": 0
             };
         let result = checkHorizontal(plate.Plate, pieceToWin, pieceToPlay);
         assert.equal(result.win, false);
-        assert.equal(result.user, pieceToPlay.user);
+        assert.equal(result.user, pieceToPlay.userId);
         assert.equal(result.count, 3);
     });
 });

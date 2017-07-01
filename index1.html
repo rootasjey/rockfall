@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html style="height: 100%; width: 100%;">
+
+<head>
+  <meta charset="utf-8">
+  <meta name=viewport content="width=device-width, initial-scale=1">
+  <title>Rockfall</title>
+</head>
+
+<body style="width: 100%; height: 100%;">
+  <button onclick="joinGame();">Join No Connect</button>
+  <input type=number id="xPiece" />
+  <input type=number id="pieceWeight" />
+  <button onclick="addPiece();">Add Piece</button>
+  <button onclick="skipTurn();">Skip Turn</button>
+  <button onclick="ready(true);">Ready Accept</button>
+  <button onclick="ready(false);">Ready Cancel</button>
+  <script src="http://localhost:8080/socket.io/socket.io.js"></script>
+  <script>
+    var socket = io.connect('http://localhost:8080');
+    var playerId = -1;
+    document.addEventListener("DOMContentLoaded", function (event) {
+      
+      socket.on('identifiant', function (userInfo) {
+        console.log("identifiant");
+        console.log(userInfo);
+        playerId = userInfo.id
+      });
+
+      socket.on('add_waiting_list', function (user) {
+        console.log("add_waiting_list");
+        console.log(user);
+      });
+
+      socket.on('AreYouReady', function () {
+        console.log("AreYouReady");
+      });
+
+      setInterval(pongServer, 3000);
+    });
+
+    function addPiece() {
+      let posX = document.getElementById("xPiece").value;
+      let weight = document.getElementById("pieceWeight").value;
+      let piece = {
+        "x": posX,
+        "y": 0,
+        "state": 0,
+        "weight": weight,
+        "user": playerId
+      };
+      console.log("addPiece");
+      socket.emit('addPiece', playerId, piece);
+    }
+
+    function joinGame() {
+      console.log("joinWithoutOath");
+      socket.emit('joinWithoutOath', "usersname_" + new Date().getTime());
+    }
+
+    function pongServer() {
+      console.log("pong!");
+      socket.emit('pongReadyUser', playerId);
+      socket.emit('pongQueueUser', playerId);
+      socket.emit('pongPlayUser', playerId);
+    }
+
+    function skipTurn() {
+      console.log("skipTurn");
+      socket.emit('skipTurn', playerId);
+    }
+
+    function ready(state) {
+      if (state) {
+        console.log("readyAccept");
+        socket.emit('readyAccept', playerId);
+      } else {
+        console.log("readyRefuse");
+        socket.emit('readyRefuse', playerId);
+      }
+    }
+  </script>
+
+</html>

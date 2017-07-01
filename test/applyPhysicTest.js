@@ -12,7 +12,7 @@ describe('---- Check physic ----', function () {
             "id": 4,
             "x": 2,
             "y": 1,
-            "user": 1,
+            "userId": 1,
             "state": 0,
             "weight": 4
         };
@@ -30,7 +30,7 @@ describe('---- Check physic ----', function () {
             "id": 10,
             "x": 1,
             "y": 3,
-            "user": 2,
+            "userId": 2,
             "state": 0,
             "weight": 4
         };

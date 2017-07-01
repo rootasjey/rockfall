@@ -13,7 +13,7 @@ describe('---- add piece to party ----', function () {
                 "id": 1,
                 "x": 1,
                 "y": 0,
-                "user": 1,
+                "userId": 1,
                 "weight": 5,
                 "state": 0
             };
@@ -26,10 +26,10 @@ describe('---- add piece to party ----', function () {
             [0, 0, 0, 0, 0, 0]
         ];
 
-        let userToTest = Object.assign({}, plate.Users[0])
+        let userToTest = Object.assign({}, plate.Users.get("1"))
 
         assert.equal(0, indexPiece.length);
-        assert.equal(1, plate.Users[0].pieceAction);
+        assert.equal(1, plate.Users.get("1").pieceAction);
         assert.equal(0, plateToAddPiece[0][piece.x]);
         addPieceScript(plateToAddPiece, indexPiece, piece, userToTest);
         assert.equal(0, userToTest.pieceAction);
@@ -45,7 +45,7 @@ describe('---- add piece to party ----', function () {
                 "id": 1,
                 "x": 1,
                 "y": 0,
-                "user": 2,
+                "userId": 2,
                 "weight": 2,
                 "state": 0
             };
@@ -58,7 +58,7 @@ describe('---- add piece to party ----', function () {
             [0, 0, 0, 0, 0, 0]
         ];
 
-        let userToTest = Object.assign({}, plate.Users[1])
+        let userToTest = Object.assign({}, plate.Users.get("2"))
 
         assert.equal(0, indexPiece.length);
         addPieceScript(plateToAddPiece, indexPiece, piece, userToTest);
@@ -73,7 +73,7 @@ describe('---- add piece to party ----', function () {
                 "id": 1,
                 "x": 0,
                 "y": 0,
-                "user": 1,
+                "userId": 1,
                 "weight": 5,
                 "state": 0
             };
@@ -84,7 +84,7 @@ describe('---- add piece to party ----', function () {
                 "id": 1,
                 "x": 0,
                 "y": 0,
-                "user": 1,
+                "userId": 1,
                 "state": 0,
                 "weight": 4
             }, 0, 0, 0, 0, 0],
@@ -94,7 +94,7 @@ describe('---- add piece to party ----', function () {
             [0, 0, 0, 0, 0, 0]
         ];
 
-        let userToTest = Object.assign({}, plate.Users[0])
+        let userToTest = Object.assign({}, plate.Users.get("1"))
 
 
         assert.equal(0, indexPiece.length);
@@ -110,7 +110,7 @@ describe('---- add piece to party ----', function () {
                 "id": 1,
                 "x": 1,
                 "y": 0,
-                "user": 3,
+                "userId": 3,
                 "weight": 5,
                 "state": 0
             };
@@ -123,7 +123,7 @@ describe('---- add piece to party ----', function () {
             [0, 0, 0, 0, 0, 0]
         ];
 
-        let userToTest = Object.assign({}, plate.Users[2])
+        let userToTest = Object.assign({}, plate.Users.get("3"))
 
         assert.equal(0, indexPiece.length);
         addPieceScript(plateToAddPiece, indexPiece, piece, userToTest);
@@ -139,7 +139,7 @@ describe('---- add piece to party ----', function () {
                 "id": 1,
                 "x": 1,
                 "y": 0,
-                "user": 1,
+                "userId": 1,
                 "weight": 6,
                 "state": 0
             };
@@ -151,7 +151,7 @@ describe('---- add piece to party ----', function () {
             [0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0]
         ];
-        let userToTest = Object.assign({}, plate.Users[0])
+        let userToTest = Object.assign({}, plate.Users.get("1"))
 
         assert.equal(0, indexPiece.length);
         addPieceScript(plateToAddPiece, indexPiece, piece, userToTest);

@@ -12,7 +12,7 @@ describe('---- Check diagonal align ----', function () {
                 "id": 11,
                 "x": 2,
                 "y": 3,
-                "user": 2,
+                "userId": 2,
                 "state": 0,
                 "weight": 4
             };
@@ -23,7 +23,7 @@ describe('---- Check diagonal align ----', function () {
         let result = checkDiagonal(plateClone, pieceToWin, pieceToPlay);
 
         assert.equal(result.win, true);
-        assert.equal(result.user, pieceToPlay.user);
+        assert.equal(result.user, pieceToPlay.userId);
         assert.equal(result.countPiece, 3);
 
         let sizeFirst = result.winPiece.filter(obj => obj.x == 2 && obj.y == 3 && obj.state == 3).length;
@@ -40,7 +40,7 @@ describe('---- Check diagonal align ----', function () {
                 "id": 15,
                 "x": 2,
                 "y": 4,
-                "user": 2,
+                "userId": 2,
                 "state": 0,
                 "weight": 4
             };
@@ -49,7 +49,7 @@ describe('---- Check diagonal align ----', function () {
         let result = checkDiagonal(plateClone, pieceToWin, pieceToPlay);
 
         assert.equal(result.win, false);
-        assert.equal(result.user, pieceToPlay.user);
+        assert.equal(result.user, pieceToPlay.userId);
         assert.equal(result.countPiece, 0);
     });
 });
